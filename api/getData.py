@@ -46,17 +46,6 @@ def getScore(qwikLabURL):
             track2_Score += 1
     return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
 
-"""
-def getJSON():
-    # get the users data
-    data = getUsers()
-    # create a list of dictionaries
-    users = []
-    for user in data:
-        scores = getScore(user[2])
-        users.append({"name": user[0].strip(), "email": user[1].strip(), "qwikLabURL": user[2].strip(), "track1_score": scores["track1_score"], "track2_score": getScore(user[2])['track2_score'], "total_score": scores["total_score"]})
-    return users
-"""
 
 def leaderboard(data):
     # put the user dictionaries in descending order with the total score
@@ -85,3 +74,14 @@ def getFromDB():
     for row in data:
         result_json.append({"name": row[0], "email": row[1], "qwikLabURL": row[2], "track1_score": row[3], "track2_score": row[4], "total_score": row[5]})
     return result_json
+
+def refreshScoreOfUser():
+    json = getFromDB()
+    for user in json:
+        score = getScore(user['qwikLabURL'])
+        conn = sqlite3.connect('database/leaderboard.db')
+        c = conn.cursor()
+        c.execute("UPDATE leaderboard SET track1_score = ?, track2_score = ?, total_score = ? WHERE qwikLabURL = ?", (score['track1_score'], score['track2_score'], score['total_score'], user['qwikLabURL']))
+        conn.commit()
+        conn.close()
+    storeJSONInDB(json)
