@@ -1,0 +1,49 @@
+.leaderboard
+{
+	margin: 10px auto;
+	width: 90%;
+	padding: 20px 30px 30px;
+	background-color: rgba(243, 242, 242, 0.918);
+	overflow: scroll;
+    color: black;
+    font-size: 1.5rem;
+}
+
+#leaderboard-table {
+	border-collapse: collapse;
+	width: 100%;
+	height: 80%;
+
+
+  }
+  
+  #leaderboard-table td, #leaderboard-table th {
+	border: 2px dashed rgb(242, 191, 66);
+	padding: 8px;
+  }
+  
+  #leaderboard-table tr:nth-child(even){background-color: rgba(242, 191, 66, 0.363);}
+  
+  #leaderboard-table tr:hover {background-color: rgba(89, 166, 92,0.3);}
+  
+  #leaderboard-table th {
+	font-size: 1.5rem;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: rgb(89, 166, 92);
+	border: 3px solid rgb(238, 236, 236);
+	color: white;
+	border-collapse: separate;
+  }
+
+  #leaderboard-table .name
+  {
+      width: 50%;
+  }
+
+  #leaderboard-table a
+  {
+    display: block;
+    width: 100%;
+}
