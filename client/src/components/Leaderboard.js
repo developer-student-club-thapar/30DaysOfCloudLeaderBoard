@@ -6,7 +6,7 @@ import LineChart from './LineChart';
 
 const Leaderboard=()=>
 {
-    const [members, setMembers] = useState([]);
+    const [members, setMembers] = useState([{}]);
     const [names, setNames] = useState([]);
     const [track1, setTrack1] = useState([]);
     const [track2, setTrack2] = useState([]);
