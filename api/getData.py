@@ -19,8 +19,12 @@ def addUser(name, email, qwikLabURL):
     c.execute("INSERT INTO leaderboard VALUES (?,?,?,?,?,?)", (json['name'], json['email'], json['qwikLabURL'], score['track1_score'], score['track2_score'], score['total_score']))
     conn.commit()
     conn.close()
+    # get json from the db
     json = getFromDB()
+    # sort the json in descending order with the total score and store it again
     storeJSONInDB(json)
+    # refresh score of all
+    refreshScoreOfUser()
 
 
 def getScore(qwikLabURL):
