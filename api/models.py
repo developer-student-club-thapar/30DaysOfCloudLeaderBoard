@@ -20,3 +20,14 @@ class Leaderboard(Base):
         self.track1_score = track1_score
         self.track2_score = track2_score
 
+class UserModel(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    username = Column(String(120), unique=True)
+    # hashed passwd
+    password = Column(String(120), unique=False)
+
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        
