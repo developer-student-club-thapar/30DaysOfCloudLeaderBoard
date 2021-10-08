@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, Response
 from database import SessionLocal, engine
 from getData import *
 from database import *
@@ -6,16 +6,44 @@ from getDB import *
 import models
 from security import *
 from werkzeug.utils import secure_filename
+from flask_cors import CORS, cross_origin
 import csv
+import threading
 
 app = Flask(__name__)
 
 db = SessionLocal()
 models.Base.metadata.create_all(bind=engine)
 
+def readCSVFile(filename):
+    with open(filename, 'r') as csvfile:
+        # read the file
+        reader = csv.DictReader(csvfile)
+        # loop through the file
+        for row in reader:
+            # get data from the name email and qwiklabs from the file
+            name = row['name']
+            email = row['email']
+            # check if email exists in the database
+            if db.query(models.Leaderboard).filter_by(email=email).first():
+                pass
+            qwiklabs = row['qwiklabs']
+            # check if qwiklabs exists in the database
+            if db.query(models.Leaderboard).filter_by(qwiklab_url=qwiklabs).first():
+                pass
+
+            score = getScore(qwiklabs)
+            profile_image = profileImage(qwiklabs)
+            user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"], profile_image=profile_image)
+            db.add(user)
+            db.commit()
+        os.system("rm -f " + filename)
+
 @app.route('/')
+@cross_origin()
 def index():
-    return jsonify(getJsonFromDB())
+    response = jsonify(getJsonFromDB())
+    return response
 
 
 @app.route('/add', methods=['POST'])
@@ -61,31 +89,22 @@ def upload():
     # get name email and qwiklabs from the file uploaded
     file = request.files['file']
     # saving the file
-    filename = secure_filename(file.filename)
+    filename = secure_filename(file.filename) + "code"
     file.save(filename)
-    # open the file => csv file
     with open(filename, 'r') as csvfile:
         # read the file
         reader = csv.DictReader(csvfile)
-        # loop through the file
         for row in reader:
-            # get data from the name email and qwiklabs from the file
             try:
                 name = row['name']
                 email = row['email']
                 qwiklabs = row['qwiklabs']
-                score = getScore(qwiklabs)
-                profile_image = profileImage(qwiklabs)
-                user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"], profile_image=profile_image)
-                try:
-                    db.add(user)
-                    db.commit()
-                except:
-                    pass
+                # call the function in a different thread
+                thread = threading.Thread(target=readCSVFile, args=(filename,))
+                thread.start()
+                return jsonify({"success": "success"})
             except:
-                return jsonify({"error": "Invalid csv file"})
-        # refresh the db
-        return jsonify({"success": "success"})
+                return Response(jsonify({"error": "Invalid csv file"}), status=400)
 
 @app.route('/register', methods=['POST'])
 def register():
