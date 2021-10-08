@@ -45,6 +45,7 @@ const Leaderboard=()=>
 
     
     let rank=1;
+    let max_marks=members[0].total_score;
     return(
         <div className="leaderboard">
             <table id="leaderboard-table">
@@ -61,7 +62,7 @@ const Leaderboard=()=>
                 {
                   members.map((member)=>{
                       return(
-                        <Row key={rank+1} rank={rank++} data={member}/>
+                        <Row key={rank+1} rank={rank++} data={member} maxScore={max_marks}/>
                       );
                   })
                 }

@@ -39,7 +39,11 @@
 	border-collapse: separate;
   }
 
-
+.crown
+{
+  height: 20px;
+  margin: 0 10px;
+}
   
 .name
 {

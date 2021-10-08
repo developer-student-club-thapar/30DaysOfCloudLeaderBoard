@@ -1,10 +1,16 @@
 import '../assets/css/Leaderboard.css';
+import crown from '../assets/media/crown.jpeg';
 
 const Row=(props)=>{
+    
     return(
         
         <tr>
-            <td>{props.rank}</td>
+            <td>{props.rank}
+            {
+                props.data.total_score==props.maxScore?<img src={crown} className="crown" alt="crown"/>:null
+            }
+            </td>
             <td><a href={props.data.qwikLabURL} target='_blank' className="name">
                 <img src={props.data.profile_image} alt="pfp" className="pfp"/>
                 <span>
