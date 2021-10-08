@@ -5,7 +5,12 @@ const Row=(props)=>{
         
         <tr>
             <td>{props.rank}</td>
-            <td className="name"><a href={props.data.qwikLabURL} target='_blank'>{props.data.name}</a></td>
+            <td><a href={props.data.qwikLabURL} target='_blank' className="name">
+                <img src={props.data.profile_image} alt="pfp" className="pfp"/>
+                <span>
+                {props.data.name}
+                </span>
+                </a></td>
             <td>{props.data.total_score}</td>
             <td>{props.data.track1_score}</td>
             <td>{props.data.track2_score}</td>

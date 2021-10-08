@@ -21,6 +21,7 @@
   #leaderboard-table td, #leaderboard-table th {
 	border: 2px dashed rgb(242, 191, 66);
 	padding: 8px;
+
   }
   
   #leaderboard-table tr:nth-child(even){background-color: rgba(242, 191, 66, 0.363);}
@@ -38,19 +39,29 @@
 	border-collapse: separate;
   }
 
-  #leaderboard-table .name
-  {
-      width: 50%;
-  }
 
-  #leaderboard-table a
-  {
-    display: block;
+  
+.name
+{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.name span{
     width: 100%;
 }
-
 .linechart
 {
     width: 90%;
     margin: 60px auto 0;
+}
+
+.pfp
+{
+    width: 40px;
+    border-radius: 40px;
+    margin: 0 10px;
 }
