@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gcloud_leaderboard/Models/auth.dart';
 import 'package:gcloud_leaderboard/Models/user.dart';
 import 'package:gcloud_leaderboard/UI/Screens/homescreen.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: UserData())
+        ChangeNotifierProvider.value(value: UserData()),
+        ChangeNotifierProvider.value(value: Auth())
       ],
       child: MaterialApp(
        
