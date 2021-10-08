@@ -19,7 +19,6 @@ WORKDIR /app
 COPY ./api /app
 RUN mkdir /app/database/
 COPY ./cronFile /etc/cron.d/container_cronjob
-RUN chmod +x run.sh
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
@@ -30,5 +29,6 @@ RUN chmod 644 /etc/cron.d/container_cronjob
 RUN cron
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-#CMD ["python", "fillDB.py"]
+# CMD ["python", "fillDB.py"]
+CMD ["python", "run.py"]
 CMD gunicorn --certfile=origin.pem --keyfile=key.pem --worker-class gevent --bind 0.0.0.0:6363 app:app
