@@ -88,4 +88,3 @@ def refreshScoreOfUser():
         c.execute("UPDATE leaderboard SET track1_score = ?, track2_score = ?, total_score = ? WHERE qwikLabURL = ?", (score['track1_score'], score['track2_score'], score['total_score'], user['qwikLabURL']))
         conn.commit()
         conn.close()
-    storeJSONInDB(json)
