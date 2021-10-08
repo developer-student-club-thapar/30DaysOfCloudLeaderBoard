@@ -11,14 +11,15 @@ class Leaderboard(Base):
     total_score = Column(Integer)
     track1_score = Column(Integer)
     track2_score = Column(Integer)
-
-    def __init__(self, name, email, total_score, track1_score, track2_score, qwiklab_url):
+    profile_image = Column(String(120), unique=False)
+    def __init__(self, name, email, total_score, track1_score, track2_score, qwiklab_url, profile_image):
         self.name = name
         self.email = email
         self.qwiklab_url = qwiklab_url
         self.total_score = total_score
         self.track1_score = track1_score
         self.track2_score = track2_score
+        self.profile_image = profile_image
 
 class UserModel(Base):
     __tablename__ = 'users'

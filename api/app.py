@@ -34,14 +34,14 @@ def add():
     
     name = request.json['name']
     email = request.json['email']
-    qwiklabs = request.json['qwiklabs']
+    qwiklabs = request.json['qwikLabURL']
+    profile_image = profileImage(qwiklabs)
     score = getScore(qwiklabs)
-    user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"])
+    user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"], profile_image=profile_image)
     try:
         db.add(user)
         db.commit()
         # refresh the db
-        refreshDb()
         return jsonify({"success": "success"})
     except:
         return jsonify({"error": "Already exists"})
@@ -75,7 +75,8 @@ def upload():
                 email = row['email']
                 qwiklabs = row['qwiklabURL']
                 score = getScore(qwiklabs)
-                user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"])
+                profile_image = profileImage(qwiklabs)
+                user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"], profile_image=profile_image)
                 try:
                     db.add(user)
                     db.commit()
