@@ -53,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      floatingActionButton:
-          AddButton(),
+      // floatingActionButton:
+      //     AddButton(),
       body: SafeArea(
         child: isLoading ? Center(child: CircularProgressIndicator(),): RefreshIndicator(
           onRefresh: ()=>Provider.of<UserData>(context,listen: false).getUserList() ,
@@ -71,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: ListView.builder(
+                  
                   itemCount: listOfUsers.length,
                   itemBuilder: (ctx,index){
                     return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
