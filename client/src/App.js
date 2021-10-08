@@ -9,13 +9,13 @@ function App() {
     <>
       <header>
         <div className="header">
-          <img src={gdsc} style={{
+          <img src={gdsc} className="gdsc" style={{
             width:'400px',
             maxWidth:'80vw',
             alignSelf:'flex-start'
             }} alt='Google Developers Student Clud'/>
           <div className="title">
-            <img src={cloud} alt='Google Cloud Logo'/>
+            <img src={cloud} className="cloud" alt='Google Cloud Logo'/>
             <h1>#30DayGCPChallenge</h1>
             <h2>DSC TIET, Patiala</h2>
           </div>
