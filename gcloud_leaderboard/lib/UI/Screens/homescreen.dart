@@ -29,13 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final listOfUsers = Provider.of<UserData>(context).users;
     return Scaffold(
-      backgroundColor: const Color(0xffF8F0E3),
+      backgroundColor:  (Colors.white),
       appBar: AppBar(
-        centerTitle: true,
+       
         backgroundColor: Colors.white,
-        title: const Text(
-          'Leaderboard',
-          style: TextStyle(color: Colors.black),
+        title: Center(
+          
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:  [
+               Text(
+                'Leaderboard',
+                style: TextStyle(color: Colors.black),
+              ),
+              Container(height: 50,child: Image.asset('assets/leaderboard.png'))
+            ],
+          ),
         ),
       ),
       floatingActionButton:
@@ -132,15 +141,30 @@ class _HomeScreenState extends State<HomeScreen> {
           }, 
           child: const Icon(Icons.add)),
       body: SafeArea(
-        child: isLoading ? Center(child: CircularProgressIndicator(),): ListView.builder(
-          itemCount: listOfUsers.length,
-          itemBuilder: (ctx,index){
-            return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
-              index: index,
-              user: listOfUsers[index],
-            );
-          }
-          )
+        child: isLoading ? Center(child: CircularProgressIndicator(),): Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 220,
+              margin: EdgeInsets.only(bottom: 15,),
+              decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage('assets/30daygcp.jpeg'),fit: BoxFit.fitWidth)
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: listOfUsers.length,
+                itemBuilder: (ctx,index){
+                  return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
+                    index: index,
+                    user: listOfUsers[index],
+                  );
+                }
+                ),
+            ),
+          ],
+        )
         ),
     );
   }
@@ -160,44 +184,61 @@ class LeaderBoardTile extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20)
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+                color: Colors.black,
+                blurRadius: 2.0,
+                spreadRadius: 0.0,
+                offset: Offset(2.0, 2.0), // shadow direction: bottom right
+            )
+        ]
       ),
       margin: const EdgeInsets.all(20),
-      child: Row(
+      child: Column(
         children: [
-          Flexible(
-            
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                child: Text(
-                  '${index+1}'
-                ),
-              ),
-            )),
-            Container(
-              margin: EdgeInsets.only(left: 30, top: 10,bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
-                  Text(
-                    'Name: ${user.name}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18
+          Container(
+            width: double.infinity,
+            height: 150,
+            child: Image.asset('assets/odml_logo_480.png',fit: BoxFit.cover),
+          ),
+          Row(
+            children: [
+              Flexible(
+                
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircleAvatar(
+                    child: Text(
+                      '${index+1}'
                     ),
                   ),
-                  Text(
-                    'Total Points: ${user.total}',
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14
-                    ),
+                )),
+                Container(
+                  margin: EdgeInsets.only(left: 30, top: 10,bottom: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      Text(
+                        'Name: ${user.name}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18
+                        ),
+                      ),
+                      Text(
+                        'Total Points: ${user.total}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
+            ],
+          ),
         ],
       ),
     );
