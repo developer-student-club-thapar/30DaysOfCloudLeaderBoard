@@ -39,6 +39,7 @@ const LineChart=(props)=>
             ]
     };
 
+    let delayed;
     return(
         <div className="linechart">
             <Line
@@ -52,8 +53,19 @@ const LineChart=(props)=>
                 legend:{
                 display:true,
                 position:'top'
-                }
-            }}
+                },
+                animation: {
+                    onComplete: () => {
+                      delayed = true;
+                    },
+                    delay: (context) => {
+                      let delay = 0;
+                      if (context.type === 'data' && context.mode === 'default' && !delayed) {
+                        delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                      }
+                      return delay;
+                    }
+            }}}
             />
         </div>
     )

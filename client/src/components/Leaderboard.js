@@ -67,9 +67,6 @@ const Leaderboard=()=>
                 }
               </tbody>
             </table>
-            {
-                console.log(total)
-            }
             <LineChart names={names} track1={track1} track2={track2} total={total}/>
         </div>
       );

@@ -2,7 +2,7 @@ import gdsc from "./assets/media/gdsc-banner.svg";
 import cloud from './assets/media/cloud-icon.png';
 import leaderboard from './assets/media/leaderboard.png';
 import Leaderboard from "./components/Leaderboard";
-import extra from "./assets/media/brackets.png";
+import brackets from "./assets/media/brackets.png";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
             <h1>#30DayGCPChallenge</h1>
             <h2>DSC TIET, Patiala</h2>
           </div>
-          <img src={extra} alt='Background' className="extra"/>
+          <img src={brackets} alt='Background' className="extra"/>
         </div>
       </header>
       <div className="leaderboardTitle">
@@ -28,9 +28,13 @@ function App() {
       </div>
       <Leaderboard/>
 
-      {/* <footer>
-          <img src={brackets} style ={{width:'200px'}}/>
-      </footer> */}
+      <footer>
+        <div className="footer">
+          <img src={brackets} style ={{width:'100px'}}/>
+          <h2>Developers Student Club, TIET Patiala</h2>
+        </div>
+        <small>Made with ❤️by <a href="https://servatom.com" target="_blank">Servatom</a> at DSC Patiala</small>
+      </footer>
     </>
   );
 }
