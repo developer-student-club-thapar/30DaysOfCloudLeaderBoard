@@ -73,7 +73,7 @@ def upload():
             try:
                 name = row['name']
                 email = row['email']
-                qwiklabs = row['qwiklabs']
+                qwiklabs = row['qwiklabURL']
                 score = getScore(qwiklabs)
                 user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"])
                 try:
