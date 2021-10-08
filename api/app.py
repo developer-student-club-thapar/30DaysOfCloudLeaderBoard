@@ -5,6 +5,8 @@ from database import *
 from getDB import *
 import models
 from security import *
+from werkzeug.utils import secure_filename
+import csv
 
 app = Flask(__name__)
 
@@ -43,6 +45,46 @@ def add():
         return jsonify({"success": "success"})
     except:
         return jsonify({"error": "Already exists"})
+
+# upload csv file and put data in the database
+@app.route('/upload', methods=['POST'])
+def upload():
+    # get header
+    header = request.headers.get('Authorization')
+    if header is None:
+        return jsonify({"error": "No authorization header"}), 401
+
+    # pass token to verify
+    if get_current_user(header) == None:
+        return jsonify({"error": "Invalid token"}), 401
+    
+    # get name email and qwiklabs from the file uploaded
+    file = request.files['file']
+    # saving the file
+    filename = secure_filename(file.filename)
+    file.save(filename)
+    # open the file => csv file
+    with open(filename, 'r') as csvfile:
+        # read the file
+        reader = csv.DictReader(csvfile)
+        # loop through the file
+        for row in reader:
+            # get data from the name email and qwiklabs from the file
+            try:
+                name = row['name']
+                email = row['email']
+                qwiklabs = row['qwiklabs']
+                score = getScore(qwiklabs)
+                user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"])
+                try:
+                    db.add(user)
+                    db.commit()
+                except:
+                    pass
+            except:
+                return jsonify({"error": "Invalid csv file"})
+        # refresh the db
+        return jsonify({"success": "success"})
 
 @app.route('/register', methods=['POST'])
 def register():
