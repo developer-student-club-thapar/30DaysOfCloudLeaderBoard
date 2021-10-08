@@ -5,11 +5,37 @@ import Row from './Row';
 
 const Leaderboard=()=>
 {
-    const [members, setMembers] = useState([])
+    const [members, setMembers] = useState([]);
+    const [names, setNames] = useState([]);
+    const [track1, setTrack1] = useState([]);
+    const [track2, setTrack2] = useState([]);
+    const [total, setTotal] = useState([]);
+
     async function getLeaderboard()
     {
         const response = await axios.get('https://gcloud.servatom.com/');
         setMembers(response.data);
+
+        fillDatasets(response.data);
+    }
+
+    const fillDatasets=(data)=>
+    {
+
+        let names=[], total=[], track1=[], track2=[];
+        data.forEach((person)=>
+        {
+            names.push(person.name);
+            total.push(person.total_score);
+            track1.push(person.track1_score);
+            track2.push(person.track2_score);
+
+        })
+        setNames(names);
+        setTotal(total);
+        setTrack1(track1);
+        setTrack2(track2);
+
     }
 
     useEffect(()=>{

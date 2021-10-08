@@ -1,8 +1,8 @@
-
 import gdsc from "./assets/media/gdsc-banner.svg";
 import cloud from './assets/media/cloud-icon.png';
 import leaderboard from './assets/media/leaderboard.png';
 import Leaderboard from "./components/Leaderboard";
+import extra from "./assets/media/brackets.png";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
             <h1>#30DayGCPChallenge</h1>
             <h2>DSC TIET, Patiala</h2>
           </div>
+          <img src={extra} alt='Background' className="extra"/>
         </div>
       </header>
       <div className="leaderboardTitle">
