@@ -2,6 +2,7 @@ import '../assets/css/Leaderboard.css';
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import Row from './Row';
+import LineChart from './LineChart';
 
 const Leaderboard=()=>
 {
@@ -41,6 +42,7 @@ const Leaderboard=()=>
     useEffect(()=>{
         getLeaderboard();
     },[])
+
     
     let rank=1;
     return(
@@ -64,8 +66,11 @@ const Leaderboard=()=>
                   })
                 }
               </tbody>
-            
             </table>
+            {
+                console.log(total)
+            }
+            <LineChart names={names} track1={track1} track2={track2} total={total}/>
         </div>
       );
 }

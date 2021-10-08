@@ -1,0 +1,62 @@
+import {Line} from 'react-chartjs-2';
+import { useState } from 'react';
+
+const LineChart=(props)=>
+{
+    const data=
+    {
+
+        labels: props.names,
+        datasets: [
+            {
+                label: 'Total',
+                fill: false,
+                lineTension: 0.5,
+                backgroundColor: 'rgb(216,81,64)',
+                borderColor: 'rgb(216,81,64)',
+                borderWidth: 2,
+                data: props.total
+            },
+            {
+            label: 'Track 1',
+            fill: false,
+            lineTension: 0.5,
+            backgroundColor: 'rgb(242, 191, 66)',
+            borderColor: 'rgb(242, 191, 66)',
+            borderWidth: 2,
+            data: props.track1
+            },
+            {
+                label: 'Track 2',
+                fill: false,
+                lineTension: 0.5,
+                backgroundColor: 'rgb(89, 166, 92)',
+                borderColor: 'rgb(89, 166, 92)',
+                borderWidth: 2,
+                data: props.track2
+                }
+
+            ]
+    };
+
+    return(
+        <div className="linechart">
+            <Line
+            data={data}
+            options={{
+                title:{
+                display:true,
+                text:'GCP Challenge Progress',
+                fontSize:20
+                },
+                legend:{
+                display:true,
+                position:'top'
+                }
+            }}
+            />
+        </div>
+    )
+}
+
+export default LineChart;
