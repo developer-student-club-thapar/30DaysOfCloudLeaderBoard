@@ -21,14 +21,22 @@ class UserData extends ChangeNotifier {
     return [..._users];
   }
   Future<void> addUser(String email, String name, String qwikLabId) async {
+    print(name);
+    print(email);
+    print(qwikLabId);
     final url = Uri.parse('https://gcloud.servatom.com/add');
     try{
     final response = await http.post(url,
-        body: jsonEncode({
+      headers: {"Content-Type": "application/json"},
+        body: json.encode(
+          {
           "name": "$name",
           "email": "$email",
           "qwiklabs": "$qwikLabId",
-        }));
+        }
+        )
+        );
+    await getUserList();
     if(response.statusCode!=200){
       throw "Could Not Add User";
     }
@@ -38,6 +46,7 @@ class UserData extends ChangeNotifier {
   }
 
   Future<void> getUserList()async{
+    _users = [];
     final url = Uri.parse('https://gcloud.servatom.com/');
     try{
       final response = await http.get(url);
