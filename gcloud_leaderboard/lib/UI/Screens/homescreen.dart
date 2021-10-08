@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
     listUser();
   }
@@ -45,85 +47,83 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Dialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(29)),
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            'Add User',
-                            style:  TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18
-                            )
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Add User',
+                          style:  TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18
+                          )
+                        ),
+                       const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left:
+                                         10),
+                                hintText: 'Enter the name',
+                                hintStyle: TextStyle(color: Colors.black)),
+                            onChanged: (value) {
+                              name = value;
+                            },
                           ),
-                         const SizedBox(
-                            height: 20,
-                          ),
+                        ),
                           Center(
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                      left:
-                                           10),
-                                  hintText: 'Enter the name',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                              onChanged: (value) {
-                                name = value;
-                              },
-                            ),
+                          child: TextField(
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left:
+                                         10),
+                                hintText: 'Enter the email',
+                                hintStyle: TextStyle(color: Colors.black)),
+                            onChanged: (value) {
+                              email = value;
+                            },  
                           ),
-                            Center(
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                      left:
-                                           10),
-                                  hintText: 'Enter the email',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                              onChanged: (value) {
-                                email = value;
-                              },  
-                            ),
+                        ),
+                          Center(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    left:
+                                         10),
+                                hintText: 'Enter the qwikLabUrl',
+                                hintStyle: TextStyle(color: Colors.black)),
+                            onChanged: (value) {
+                              qwikLabId = value;
+                            },
                           ),
-                            Center(
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.only(
-                                      left:
-                                           10),
-                                  hintText: 'Enter the qwikLabUrl',
-                                  hintStyle: TextStyle(color: Colors.black)),
-                              onChanged: (value) {
-                                qwikLabId = value;
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                         CustomButton(
-                           text: "Add User",
-                           onTap: ()async{
-                             Navigator.pop(context);
-                             try{
-                               setState(() {
-                                 isLoading = true;
-                               });
-                               await Provider.of<UserData>(context,listen: false).addUser(email, name, qwikLabId);
-                             }catch(e){
-                               print(e);
-                             }finally{
-                               setState(() {
-                                 isLoading = false;
-                               });
-                             }
-                             
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                       CustomButton(
+                         text: "Add User",
+                         onTap: ()async{
+                           Navigator.pop(context);
+                           try{
+                             setState(() {
+                               isLoading = true;
+                             });
+                             await Provider.of<UserData>(context,listen: false).addUser(email, name, qwikLabId);
+                           }catch(e){
+                             //TODO: Implement error
+                           }finally{
+                             setState(() {
+                               isLoading = false;
+                             });
                            }
-                         )
-                        ],
-                      ),
+                           
+                         }
+                       )
+                      ],
                     ),
                   ),
                 ),
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: isLoading ? Center(child: CircularProgressIndicator(),): ListView.builder(
           itemCount: listOfUsers.length,
           itemBuilder: (ctx,index){
-            return listOfUsers.length ==0 ? Center(child: Text('Add Users'),): LeaderBoardTile(
+            return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
               index: index,
               user: listOfUsers[index],
             );
@@ -149,10 +149,10 @@ class _HomeScreenState extends State<HomeScreen> {
 class LeaderBoardTile extends StatelessWidget {
   const LeaderBoardTile({
     Key? key,
-    this.index,
+    required this.index,
     required this.user
   }) : super(key: key);
-  final index;
+  final int index;
   final User user;
   @override
   Widget build(BuildContext context) {

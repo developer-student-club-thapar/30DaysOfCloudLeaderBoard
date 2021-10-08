@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -21,9 +23,7 @@ class UserData extends ChangeNotifier {
     return [..._users];
   }
   Future<void> addUser(String email, String name, String qwikLabId) async {
-    print(name);
-    print(email);
-    print(qwikLabId);
+    
     final url = Uri.parse('https://gcloud.servatom.com/add');
     try{
     final response = await http.post(url,
