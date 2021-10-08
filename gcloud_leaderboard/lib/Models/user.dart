@@ -9,11 +9,12 @@ class User {
   final String name;
   final String email;
   final String qwiklabsProfile;
+  final String profileImage;
   final int total;
   final int track1Points;
   final int track2Points;
 
-  User(this.name, this.email, this.qwiklabsProfile, this.total,
+  User(this.name, this.email, this.qwiklabsProfile,this.profileImage, this.total,
       this.track1Points, this.track2Points);
 }
 
@@ -32,7 +33,7 @@ class UserData extends ChangeNotifier {
           {
           "name": "$name",
           "email": "$email",
-          "qwiklabs": "$qwikLabId",
+          "qwikLabURL": "$qwikLabId",
         }
         )
         );
@@ -59,6 +60,7 @@ class UserData extends ChangeNotifier {
             element["name"], 
             element["email"], 
             element["qwikLabURL"], 
+            element["profile_image"],
             element["total_score"], 
             element["track1_score"], 
             element["track2_score"]),

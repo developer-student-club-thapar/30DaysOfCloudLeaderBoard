@@ -209,9 +209,7 @@ class LeaderBoardTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CircleAvatar(
-                    child: Text(
-                      '${index+1}'
-                    ),
+                    child: Image.network(user.profileImage)
                   ),
                 )),
                 Container(
@@ -220,7 +218,7 @@ class LeaderBoardTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children:  [
                       Text(
-                        'Name: ${user.name}',
+                        '${index+1}. ${user.name}',
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18
