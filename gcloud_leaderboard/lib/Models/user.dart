@@ -23,12 +23,12 @@ class UserData extends ChangeNotifier {
   List<User> get users {
     return [..._users];
   }
-  Future<void> addUser(String email, String name, String qwikLabId) async {
+  Future<void> addUser(String email, String name, String qwikLabId,String token) async {
     
     final url = Uri.parse('https://gcloud.servatom.com/add');
     try{
     final response = await http.post(url,
-      headers: {"Content-Type": "application/json"},
+      headers: {"Content-Type": "application/json" , "Authorization": "$token"},
         body: json.encode(
           {
           "name": "$name",

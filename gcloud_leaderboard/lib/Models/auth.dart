@@ -6,6 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
+  String get token {
+    return _token!;
+  }
   bool get isAuth {
     return _token != null;
   }

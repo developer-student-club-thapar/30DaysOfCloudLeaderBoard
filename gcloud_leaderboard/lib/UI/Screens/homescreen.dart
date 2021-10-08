@@ -124,7 +124,7 @@ class LeaderBoardTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: CircleAvatar(
-                    child: Image.network(user.profileImage)
+                    backgroundImage: NetworkImage(user.profileImage)
                   ),
                 )),
                 Container(

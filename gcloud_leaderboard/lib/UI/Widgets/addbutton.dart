@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gcloud_leaderboard/Models/auth.dart';
 import 'package:gcloud_leaderboard/Models/user.dart';
+import 'package:gcloud_leaderboard/UI/Screens/homescreen.dart';
 import 'package:gcloud_leaderboard/UI/Screens/loginscreen.dart';
 import 'package:gcloud_leaderboard/UI/Widgets/custombutton.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ class _AddButtonState extends State<AddButton> {
   String name = '';
   String email = '';
   String qwikLabId='';
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -32,7 +34,7 @@ class _AddButtonState extends State<AddButton> {
                 borderRadius: BorderRadius.circular(29)),
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Column(
+              child: isLoading? Center(child: CircularProgressIndicator(),): Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
@@ -84,7 +86,7 @@ class _AddButtonState extends State<AddButton> {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                  CustomButton(
@@ -92,18 +94,19 @@ class _AddButtonState extends State<AddButton> {
                    onTap: ()async{
                      
                      try{
-                      //  setState(() {
-                      //    isLoading = true;
-                      //  });
-                       await Provider.of<UserData>(context,listen: false).addUser(email, name, qwikLabId);
+                       setState(() {
+                         isLoading = true;
+                       });
+                       await Provider.of<UserData>(context,listen: false).addUser(email, name, qwikLabId , Provider.of<Auth>(context,listen: false).token);
                        Navigator.pop(context);
                      }catch(e){
                        //TODO: Implement error
                      }finally{
-                       Navigator.pop(context);
-                      //  setState(() {
-                      //    isLoading = false;
-                      //  });
+                       
+                       setState(() {
+                         isLoading = false;
+                       });
+                       Navigator.push(context, MaterialPageRoute(builder: (ctx)=> HomeScreen() ));
                      }
                      
                    }
