@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gcloud_leaderboard/Models/user.dart';
 import 'package:gcloud_leaderboard/UI/Screens/homescreen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +13,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     
-      home: HomeScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: UserData())
+      ],
+      child: MaterialApp(
+       
+        home: HomeScreen(),
+      ),
     );
   }
 }

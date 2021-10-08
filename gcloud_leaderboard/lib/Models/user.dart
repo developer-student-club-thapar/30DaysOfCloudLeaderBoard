@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class User {
@@ -14,9 +15,11 @@ class User {
       this.track1Points, this.track2Points);
 }
 
-class UserData {
+class UserData extends ChangeNotifier {
   List<User> _users = [];
-
+  List<User> get users {
+    return [..._users];
+  }
   Future<void> addUser(String email, String name, String qwikLabId) async {
     final url = Uri.parse('https://gcloud.servatom.com/add');
     try{
@@ -46,13 +49,13 @@ class UserData {
           User(
             element["name"], 
             element["email"], 
-            element["qwiklabURL"], 
+            element["qwikLabURL"], 
             element["total_score"], 
             element["track1_score"], 
             element["track2_score"]),
         );
       });
-      print(_users);
+      notifyListeners();
       }else{
         throw "Could Not Get data";
       }
