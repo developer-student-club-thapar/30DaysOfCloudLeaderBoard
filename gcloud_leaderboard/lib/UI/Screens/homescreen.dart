@@ -35,7 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor:  (Colors.white),
       appBar: AppBar(
-       
+        leading: Provider.of<Auth>(context).isAuth ? IconButton(onPressed: (){
+          Provider.of<Auth>(context,listen: false).logout();
+        }, icon: Icon(Icons.logout,color: Colors.black,)): null,
         backgroundColor: Colors.white,
         title: Center(
           
@@ -54,29 +56,32 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton:
           AddButton(),
       body: SafeArea(
-        child: isLoading ? Center(child: CircularProgressIndicator(),): Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: double.infinity,
-              height: 220,
-              margin: EdgeInsets.only(bottom: 15,),
-              decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage('assets/30daygcp.jpeg'),fit: BoxFit.fitWidth)
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: listOfUsers.length,
-                itemBuilder: (ctx,index){
-                  return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
-                    index: index,
-                    user: listOfUsers[index],
-                  );
-                }
+        child: isLoading ? Center(child: CircularProgressIndicator(),): RefreshIndicator(
+          onRefresh: ()=>Provider.of<UserData>(context,listen: false).getUserList() ,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: double.infinity,
+                height: 220,
+                margin: EdgeInsets.only(bottom: 15,),
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/30daygcp.jpeg'),fit: BoxFit.fitWidth)
                 ),
-            ),
-          ],
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: listOfUsers.length,
+                  itemBuilder: (ctx,index){
+                    return listOfUsers.isEmpty ? Center(child: Text('Add Users'),): LeaderBoardTile(
+                      index: index,
+                      user: listOfUsers[index],
+                    );
+                  }
+                  ),
+              ),
+            ],
+          ),
         )
         ),
     );
