@@ -26,7 +26,7 @@ def add():
         return jsonify({"error": "No authorization header"}), 401
 
     # pass token to verify
-    if get_current_user(header) == None:
+    if verify_token(header) == None:
         return jsonify({"error": "Invalid token"}), 401
     
     # get data from the name email and qwiklabs from the request
@@ -55,7 +55,7 @@ def upload():
         return jsonify({"error": "No authorization header"}), 401
 
     # pass token to verify
-    if get_current_user(header) == None:
+    if verify_token(header) == None:
         return jsonify({"error": "Invalid token"}), 401
     
     # get name email and qwiklabs from the file uploaded

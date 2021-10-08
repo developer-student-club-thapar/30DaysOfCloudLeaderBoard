@@ -26,28 +26,28 @@ def addUser(name, email, qwikLabURL):
 def getScore(qwikLabURL):
     # get the users data
     url = qwikLabURL
-    # open url and find class ql-subhead1 l-mts
+    # open url and find class ql-subhead1 l-mts 
     try:
         html = urlopen(url)
+        soup = BeautifulSoup(html, "html.parser")
+        # get the class
+        badges_bs4 = soup.find_all('span', class_='ql-subhead-1 l-mts')
+        badges = []
+        for badge_bs4 in badges_bs4:
+            badges.append(badge_bs4.text.strip())
+        track1_Score = 0
+        track2_Score = 0
+        # track1_score
+        for badge in badges:
+            if badge in track1:
+                track1_Score += 1
+        for badge in badges:
+            if badge in track2:
+                track2_Score += 1
+        return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
     except:
         time.sleep(2)
         getScore(qwikLabURL)
-    soup = BeautifulSoup(html, "html.parser")
-    # get the class
-    badges_bs4 = soup.find_all('span', class_='ql-subhead-1 l-mts')
-    badges = []
-    for badge_bs4 in badges_bs4:
-        badges.append(badge_bs4.text.strip())
-    track1_Score = 0
-    track2_Score = 0
-    # track1_score
-    for badge in badges:
-        if badge in track1:
-            track1_Score += 1
-    for badge in badges:
-        if badge in track2:
-            track2_Score += 1
-    return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
 
 def leaderboard(data):
     # put the user dictionaries in descending order with the total score
@@ -60,15 +60,15 @@ def profileImage(qwikLabURL):
     # open url and find class ql-subhead1 l-mts
     try:
         html = urlopen(url)
+        soup = BeautifulSoup(html, "html.parser")
+        # get the class
+        profile_image_link_list = soup.find_all('ql-avatar', class_="l-mbl")
+        profile_image_link = "https://assets.servatom.com/Shealth/avatars/Koala.png"
+        try:
+            profile_image_link = str(profile_image_link_list[0]).split("src=")[1].split('"')[1]
+        except:
+            pass
     except:
         time.sleep(2)
         profileImage(qwikLabURL)
-    soup = BeautifulSoup(html, "html.parser")
-    # get the class
-    profile_image_link_list = soup.find_all('ql-avatar', class_="l-mbl")
-    profile_image_link = "https://assets.servatom.com/Shealth/avatars/Koala.png"
-    try:
-        profile_image_link = str(profile_image_link_list[0]).split("src=")[1].split('"')[1]
-    except:
-        pass
     return profile_image_link
