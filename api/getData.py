@@ -46,7 +46,7 @@ def getScore(qwikLabURL):
                 track2_Score += 1
         return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
     except:
-        time.sleep(2)
+        time.sleep(20)
         getScore(qwikLabURL)
 
 def leaderboard(data):
@@ -69,6 +69,6 @@ def profileImage(qwikLabURL):
         except:
             pass
     except:
-        time.sleep(2)
+        time.sleep(20)
         profileImage(qwikLabURL)
     return profile_image_link
