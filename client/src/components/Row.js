@@ -6,9 +6,9 @@ const Row=(props)=>{
     return(
         
         <tr>
-            <td>{props.rank}
+            <td>{props.data.rank}
             {
-                props.data.total_score==props.maxScore?<img src={crown} className="crown" alt="crown"/>:null
+                props.data.total_score===props.maxScore?<img src={crown} className="crown" alt="crown"/>:null
             }
             </td>
             <td><a href={props.data.qwikLabURL} target='_blank' className="name">

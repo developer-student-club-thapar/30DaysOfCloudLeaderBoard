@@ -4,6 +4,7 @@ import axios from 'axios';
 import Row from './Row';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
+import Searchbar from './SearchBar';
 
 const Leaderboard=()=>
 {
@@ -23,9 +24,15 @@ const Leaderboard=()=>
 
     async function getLeaderboard()
     {
+        
         const response = await axios.get('https://gcloud.servatom.com/');
-        setMembers(response.data);
-
+        
+        let rank=1;
+        let result = response.data.map((person)=>{
+          return { ...person, rank:rank++}
+        })
+        setMembers(result);
+        setFilteredList(result)
         fillDatasets(response.data);
     }
 
@@ -75,11 +82,19 @@ const Leaderboard=()=>
         getLeaderboard();
     },[])
 
+    const [filteredList, setFilteredList] = useState(members);
+    const searchHandler=(text)=>
+    {
+      const filteredList=members.filter((member)=>{
+        return member.name.toLowerCase().includes(text.toLowerCase())
+      });
+      setFilteredList(filteredList);
+    }
     
-    let rank=1;
     let max_marks=members[0].total_score;
     return(
         <div className="leaderboard">
+          <Searchbar searchHandler={searchHandler}/>
           <div className="tableWrapper">
             <table id="leaderboard-table">
               <thead>
@@ -93,9 +108,9 @@ const Leaderboard=()=>
               </thead>
               <tbody>
                 {
-                  members.map((member)=>{
+                  filteredList.map((member)=>{
                       return(
-                        <Row key={rank+1} rank={rank++} data={member} maxScore={max_marks}/>
+                        <Row key={member.rank} data={member} maxScore={max_marks}/>
                       );
                   })
                 }
