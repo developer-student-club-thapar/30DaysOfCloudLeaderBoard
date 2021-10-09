@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gcloud_leaderboard/Models/auth.dart';
 import 'package:gcloud_leaderboard/Models/user.dart';
 import 'package:gcloud_leaderboard/UI/Screens/homescreen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
