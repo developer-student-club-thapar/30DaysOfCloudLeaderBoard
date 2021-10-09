@@ -5,6 +5,7 @@ import Row from './Row';
 import LineChart from './LineChart';
 import BarChart from './BarChart';
 import Searchbar from './SearchBar';
+import Loader from './Loader';
 
 const Leaderboard=()=>
 {
@@ -21,12 +22,13 @@ const Leaderboard=()=>
     const [frequencyTrack1, setFrequencyTrack1] = useState([]);
     const [frequencyTrack2, setFrequencyTrack2] = useState([]);
 
-
+    const [isLoading, setIsLoading] = useState(true);
     async function getLeaderboard()
     {
         
         const response = await axios.get('https://gcloud.servatom.com/');
         
+        setIsLoading(false)
         let rank=1;
         let result = response.data.map((person)=>{
           return { ...person, rank:rank++}
@@ -108,14 +110,18 @@ const Leaderboard=()=>
               </thead>
               <tbody>
                 {
+                  !isLoading?
                   filteredList.map((member)=>{
                       return(
                         <Row key={member.rank} data={member} maxScore={max_marks}/>
                       );
-                  })
+                  }):null
                 }
               </tbody>
             </table>
+            {
+                isLoading?<Loader/>:null
+            }
           </div>
             
             <h3 style={{textAlign:'center',
