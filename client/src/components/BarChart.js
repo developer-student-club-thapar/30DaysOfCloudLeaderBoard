@@ -1,15 +1,14 @@
-import {Line} from 'react-chartjs-2';
-import { useState } from 'react';
+import {Bar} from 'react-chartjs-2';
 
-const LineChart=(props)=>
+const BarChart=(props)=>
 {
     const data=
     {
 
-        labels: props.names,
+        labels: props.scores,
         datasets: [
             {
-                label: 'Total',
+                label: 'Number of people having these Total Points',
                 fill: false,
                 lineTension: 0.5,
                 backgroundColor: 'rgb(216,81,64)',
@@ -18,16 +17,16 @@ const LineChart=(props)=>
                 data: props.total
             },
             {
-            label: 'Track 1',
-            fill: false,
-            lineTension: 0.5,
-            backgroundColor: 'rgb(242, 191, 66)',
-            borderColor: 'rgb(242, 191, 66)',
-            borderWidth: 2,
-            data: props.track1
+                label: 'Number of people having these Track 1 Points',
+                fill: false,
+                lineTension: 0.5,
+                backgroundColor: 'rgb(242, 191, 66)',
+                borderColor: 'rgb(242, 191, 66)',
+                borderWidth: 2,
+                data: props.track1
             },
             {
-                label: 'Track 2',
+                label: 'Number of people having these Track 2 Points',
                 fill: false,
                 lineTension: 0.5,
                 backgroundColor: 'rgb(89, 166, 92)',
@@ -41,33 +40,35 @@ const LineChart=(props)=>
     let delayed;
     return(
         <div className="linechart">
-            <Line
+            <Bar
             data={data}
             options={{
                 title:{
                 display:true,
-                text:'GCP Challenge Progress',
+                text:'People per points',
                 fontSize:20
                 },
                 legend:{
                 display:true,
                 position:'top'
                 },
-                animation: {
+                animation: 
+                {
                     onComplete: () => {
                       delayed = true;
                     },
                     delay: (context) => {
                       let delay = 0;
                       if (context.type === 'data' && context.mode === 'default' && !delayed) {
-                        delay = context.dataIndex * 50 + context.datasetIndex * 100;
+                        delay = context.dataIndex * 300 + context.datasetIndex * 100;
                       }
                       return delay;
                     }
-            }}}
+                } 
+            }}
             />
         </div>
     )
 }
 
-export default LineChart;
+export default BarChart;
