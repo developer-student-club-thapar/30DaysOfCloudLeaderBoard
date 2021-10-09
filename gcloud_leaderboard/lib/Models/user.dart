@@ -102,4 +102,7 @@ class UserData extends ChangeNotifier {
   String get emptyListen{
     return 'ok';
   }
+  void emptySearchList(){
+    _searchList = [];
+  }
 }
