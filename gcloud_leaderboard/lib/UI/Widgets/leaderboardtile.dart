@@ -38,7 +38,7 @@ class LeaderBoardTile extends StatelessWidget {
                     backgroundImage: NetworkImage(user.profileImage)),
               )),
               Container(
-                margin: EdgeInsets.only(left: 30, top: 10, bottom: 10),
+                margin: EdgeInsets.only(left: 10, top: 10, bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

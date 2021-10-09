@@ -13,6 +13,12 @@ class SearchScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        },
+        icon: Icon(Icons.arrow_back_ios_new_outlined,color: Colors.black,size: 18,),
+        ),
+
         title: Row(
           children:  [
             const Text(
