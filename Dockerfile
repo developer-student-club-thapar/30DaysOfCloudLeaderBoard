@@ -29,6 +29,5 @@ RUN chmod 644 /etc/cron.d/container_cronjob
 RUN cron
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-# CMD ["python", "fillDB.py"]
-CMD ["python", "run.py"]
-CMD gunicorn --certfile=origin.pem --keyfile=key.pem --worker-class gevent --bind 0.0.0.0:6363 app:app
+CMD sh run.sh
+#CMD gunicorn --certfile=origin.pem --keyfile=key.pem --worker-class gevent --bind 0.0.0.0:6363 app:app
