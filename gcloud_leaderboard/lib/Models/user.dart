@@ -13,15 +13,20 @@ class User {
   final int total;
   final int track1Points;
   final int track2Points;
+  final int position;
 
   User(this.name, this.email, this.qwiklabsProfile,this.profileImage, this.total,
-      this.track1Points, this.track2Points);
+      this.track1Points, this.track2Points,this.position);
 }
 
 class UserData extends ChangeNotifier {
   List<User> _users = [];
+  List<User> _searchList = [];
   List<User> get users {
     return [..._users];
+  }
+  List<User> get searchList {
+    return [..._searchList];
   }
   Future<void> addUser(String email, String name, String qwikLabId,String token) async {
     
@@ -47,6 +52,7 @@ class UserData extends ChangeNotifier {
   }
 
   Future<void> getUserList()async{
+    int i = 1;
     _users = [];
     final url = Uri.parse('https://gcloud.servatom.com/');
     try{
@@ -63,8 +69,12 @@ class UserData extends ChangeNotifier {
             element["profile_image"],
             element["total_score"], 
             element["track1_score"], 
-            element["track2_score"]),
+            element["track2_score"],
+            i
+            ),
+            
         );
+        i++;
       });
       notifyListeners();
       }else{
@@ -74,5 +84,19 @@ class UserData extends ChangeNotifier {
     }catch(e){
       rethrow;
     }
+  }
+  void search(String name){
+    _searchList = [];
+    if(name == ""){
+
+    }else{
+      _users.forEach((element) {
+      if(element.name.toLowerCase().contains(name)){
+        _searchList.add(element);
+      }
+     });
+    }
+    
+     notifyListeners();
   }
 }
