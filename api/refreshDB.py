@@ -18,7 +18,7 @@ def refreshDb():
             user.total_score = score['total_score']
         #user.profile_image = profileImage(user.qwiklab_url)
         #commit the changes
-            time.sleep(40)
+            time.sleep(20)
             db.commit()
             print("updated")
         else:
