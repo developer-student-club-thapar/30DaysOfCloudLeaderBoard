@@ -7,6 +7,7 @@ import models
 from getData import *
 import requests
 import random
+from getData import profileImage
 
 avatars = "https://assets.servatom.com/Shealth/avatars"
 images = []
@@ -36,14 +37,17 @@ with open(filename, 'r') as csvfile:
     # loop through the file
     for row in reader:
     # get data from the name email and qwiklabs from the file
+        if not row["Enrolment Status"] == "All Good":
+            continue
         name = row['Student Name']
         print(name)
         email = row['Student Email']
         track1_score = row["# of Skill Badges Completed in Track 1"]
         track2_score = row["# of Skill Badges Completed in Track 2"]
-        if not row["Enrolment Status"] == "All Good":
-            continue
-        total_score = int(track1_score) + int(track2_score)
+        try:
+            total_score = int(track1_score) + int(track2_score)
+        except:
+            total_score = int(float(track1_score)) + int(float(track2_score))
         print(total_score)
         
     # check if email exists in the database
@@ -71,4 +75,11 @@ with open(filename, 'r') as csvfile:
             db.rollback()
             continue
         time.sleep(1)
-        #os.system("rm -f " + filename)
+        os.system("rm " + filename)
+
+# update profile image of top 10 users
+top10 = db.query(models.Leaderboard).order_by(models.Leaderboard.total_score.desc()).limit(10).all()
+for user in top10:
+    user.profile_image = profileImage(user.qwiklab_url)
+    db.commit()
+    time.sleep(1)
