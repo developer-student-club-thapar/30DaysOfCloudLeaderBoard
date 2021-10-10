@@ -122,3 +122,14 @@ if __name__== "__main__":
         host='0.0.0.0', port="6363",
         ssl_context=('origin.pem', 'origin.pem'),
     )
+@app.route('/update', methods=['POST'])
+def update():
+    email = request.json['email']
+    # find email in database
+    user = db.query(models.Leaderboard).filter_by(email=email).first()
+    score = getScore(user.qwiklab_url)
+    user.total_score = score["total_score"]
+    user.track1_score = score["track1_score"]
+    user.track2_score = score["track2_score"]
+    db.commit()
+    return jsonify({"success": "success"})
