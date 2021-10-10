@@ -7,7 +7,7 @@ import models
 from getData import *
 import requests
 import random
-from getData import profileImage
+from getData import getAvatar
 
 avatars = "https://assets.servatom.com/Shealth/avatars"
 images = []
@@ -18,8 +18,7 @@ for i in response.json():
         images.append(i['url'])
 
 def getImage():
-    choice = random.choice(images)
-    return choice
+    return "http://20.204.137.6/image"
 
 
 db = SessionLocal()
@@ -59,14 +58,14 @@ with open(filename, 'r') as csvfile:
             user.total_score = total_score
             user.track1_score = track1_score
             user.track2_score = track2_score
-            user.profile_image = getImage()
+            user.profile_image = getAvatar(qwiklabs)
             db.commit()
             continue
         # check if qwiklabs exists in the database
         # if email and qwiklabs do not exist in the database, add them
         #profile_image = profileImage(qwiklabs)
         else:
-            profile_image = getImage()
+            profile_image = getAvatar(qwiklabs)
             user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=total_score, track1_score=track1_score, track2_score=track2_score, profile_image=profile_image)
         
         try:

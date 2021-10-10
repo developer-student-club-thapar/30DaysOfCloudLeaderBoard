@@ -73,6 +73,16 @@ def profileImage(qwikLabURL):
         profileImage(qwikLabURL)
     return profile_image_link
 
+def getAvatar(qwikLabURL):
+    url = qwikLabURL
+    try:
+        html = urlopen(url)
+        soup = BeautifulSoup(html, "html.parser")
+        profile_image_link_list = soup.find_all('ql-avatar', class_="l-mbl")
+        profile_image_link = str(profile_image_link_list[0]).split("src=")[1].split('"')[1]
+    except:
+        return "http://20.204.137.6/image"
+
 def getScoreRefresh(qwikLabURL):
     # get the users data
     url = qwikLabURL
