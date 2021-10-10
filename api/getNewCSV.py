@@ -64,7 +64,10 @@ def checkEmail():
             else:
                 print("File already exists")
 
-
+# before this loop first check email and then run web scraper in background
+checkEmail()
+os.system("python refreshDB.py &") # web scraper turned on
+time.sleep(60*60)
 while True:
     checkEmail()
     # append loop in txt file
