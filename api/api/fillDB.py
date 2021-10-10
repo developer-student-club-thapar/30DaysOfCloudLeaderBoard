@@ -59,14 +59,15 @@ with open(filename, 'r') as csvfile:
             user.total_score = total_score
             user.track1_score = track1_score
             user.track2_score = track2_score
-            user.avatar = getImage()
+            user.profile_image = getImage()
             db.commit()
             continue
         # check if qwiklabs exists in the database
         # if email and qwiklabs do not exist in the database, add them
         #profile_image = profileImage(qwiklabs)
-        profile_image = getImage()
-        user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=total_score, track1_score=track1_score, track2_score=track2_score, profile_image=profile_image)
+        else:
+            profile_image = getImage()
+            user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=total_score, track1_score=track1_score, track2_score=track2_score, profile_image=profile_image)
         
         try:
             db.add(user)
@@ -74,8 +75,8 @@ with open(filename, 'r') as csvfile:
         except:
             db.rollback()
             continue
-        time.sleep(1)
-        os.system("rm " + filename)
+time.sleep(1)
+os.system("rm " + filename)
 
 # update profile image of top 10 users
 top10 = db.query(models.Leaderboard).order_by(models.Leaderboard.total_score.desc()).limit(10).all()
