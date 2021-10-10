@@ -39,11 +39,15 @@ def getScore(qwikLabURL):
         track2_Score = 0
         # track1_score
         for badge in badges:
-            if badge in track1:
-                track1_Score += 1
+            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+            if year == "2021":
+                if badge in track1:
+                    track1_Score += 1
         for badge in badges:
-            if badge in track2:
-                track2_Score += 1
+            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+            if year == "2021":
+                if badge in track2:
+                    track2_Score += 1
         return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
     except:
         time.sleep(20)
@@ -80,8 +84,9 @@ def getAvatar(qwikLabURL):
         soup = BeautifulSoup(html, "html.parser")
         profile_image_link_list = soup.find_all('ql-avatar', class_="l-mbl")
         profile_image_link = str(profile_image_link_list[0]).split("src=")[1].split('"')[1]
+        return profile_image_link
     except:
-        return "http://20.204.137.6/image"
+        return "https://gcloud.servatom.com/image"
 
 def getScoreRefresh(qwikLabURL):
     # get the users data
