@@ -3,13 +3,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gcloud_leaderboard/Models/auth.dart';
+
 import 'package:gcloud_leaderboard/Models/user.dart';
+import 'package:gcloud_leaderboard/UI/Screens/chartscreen.dart';
 import 'package:gcloud_leaderboard/UI/Screens/searchscreen.dart';
-import 'package:gcloud_leaderboard/UI/Widgets/addbutton.dart';
+
 import 'package:gcloud_leaderboard/UI/Widgets/leaderboardtile.dart';
 
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -22,15 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
     await Provider.of<UserData>(context, listen: false).getUserList();
   }
 
-  void autoLogin() async {
-    await Provider.of<Auth>(context, listen: false).checkLogin();
-  }
-
   @override
   void initState() {
     super.initState();
     listUser();
-    autoLogin();
   }
 
   @override
@@ -48,6 +45,20 @@ class _HomeScreenState extends State<HomeScreen> {
               Icons.search,
               color: Colors.black,
             )),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (ctx) => ChartScreen( 
+                            Provider.of<UserData>(context).getMap())));
+              },
+              icon: Icon(
+                Icons.auto_graph,
+                color: Colors.black,
+              )),
+        ],
         backgroundColor: Colors.white,
         title: Center(
           child: Row(
@@ -107,4 +118,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
