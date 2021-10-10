@@ -133,6 +133,10 @@ def image():
     # return default.png
     return send_file('default.png', mimetype='image/png')
 
+@app.route('/error')
+def sendScrappingErrorLog():
+    return send_file('database/scraper_log.txt', 'text/plain')
+
 if __name__== "__main__":
     app.run(
         host='0.0.0.0', port="443",
