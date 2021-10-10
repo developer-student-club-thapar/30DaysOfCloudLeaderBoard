@@ -18,7 +18,7 @@ for i in response.json():
         images.append(i['url'])
 
 def getImage():
-    return "http://20.204.137.6/image"
+    return "https://gcloud.servatom.com/image"
 
 
 db = SessionLocal()
@@ -55,9 +55,12 @@ with open(filename, 'r') as csvfile:
             # update the score of the user
             # total_score
             user = db.query(models.Leaderboard).filter_by(email=email).first()
-            user.total_score = total_score
-            user.track1_score = track1_score
-            user.track2_score = track2_score
+            if total_score > user.total_score:
+                user.total_score = total_score
+                user.track1_score = track1_score
+                user.track2_score = track2_score
+            else:
+                continue
             user.profile_image = getAvatar(qwiklabs)
             db.commit()
             continue
@@ -66,6 +69,7 @@ with open(filename, 'r') as csvfile:
         #profile_image = profileImage(qwiklabs)
         else:
             profile_image = getAvatar(qwiklabs)
+            print(profile_image)
             user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=total_score, track1_score=track1_score, track2_score=track2_score, profile_image=profile_image)
         
         try:
@@ -76,10 +80,3 @@ with open(filename, 'r') as csvfile:
             continue
 time.sleep(1)
 os.system("rm " + filename)
-
-# update profile image of top 10 users
-top10 = db.query(models.Leaderboard).order_by(models.Leaderboard.total_score.desc()).limit(10).all()
-for user in top10:
-    user.profile_image = profileImage(user.qwiklab_url)
-    db.commit()
-    time.sleep(1)
