@@ -116,12 +116,6 @@ def login():
     access_token = create_access_token(user.username)
     return {"access_token": access_token, "type": "bearer"}
 
-
-if __name__== "__main__":
-    app.run(
-        host='0.0.0.0', port="6363",
-        ssl_context=('origin.pem', 'origin.pem'),
-    )
 @app.route('/update', methods=['POST'])
 def update():
     email = request.json['email']
@@ -138,3 +132,9 @@ def update():
 def image():
     # return default.png
     return send_file('default.png', mimetype='image/png')
+
+if __name__== "__main__":
+    app.run(
+        host='0.0.0.0', port="6363",
+        ssl_context=('origin.pem', 'origin.pem'),
+    )
