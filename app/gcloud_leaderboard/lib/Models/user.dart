@@ -15,94 +15,89 @@ class User {
   final int track2Points;
   final int position;
 
-  User(this.name, this.email, this.qwiklabsProfile,this.profileImage, this.total,
-      this.track1Points, this.track2Points,this.position);
+  User(this.name, this.email, this.qwiklabsProfile, this.profileImage,
+      this.total, this.track1Points, this.track2Points, this.position);
 }
 
 class UserData extends ChangeNotifier {
   List<User> _users = [];
   List<User> _searchList = [];
+  Map<dynamic,int> chartMap = {};
   List<User> get users {
     return [..._users];
   }
+
   List<User> get searchList {
     return [..._searchList];
   }
-  Future<void> addUser(String email, String name, String qwikLabId,String token) async {
-    
-    final url = Uri.parse('https://gcloud.servatom.com/add');
-    try{
-    final response = await http.post(url,
-      headers: {"Content-Type": "application/json" , "Authorization": "$token"},
-        body: json.encode(
-          {
-          "name": "$name",
-          "email": "$email",
-          "qwikLabURL": "$qwikLabId",
-        }
-        )
-        );
-    await getUserList();
-    if(response.statusCode!=200){
-      throw "Could Not Add User";
-    }
-    }catch(e){
-      rethrow;
-    }
+
+  Map<dynamic,int> getMap(){
+    chartMap = {};
+    _users.forEach((element) { 
+      if(chartMap.containsKey(element.total)){
+
+      chartMap[element.total] = chartMap[element.total]! + 1;
+      }else{
+        chartMap[element.total] = 1;
+      }
+    });
+    return chartMap;
   }
 
-  Future<void> getUserList()async{
+  Future<void> getUserList() async {
     int i = 1;
     _users = [];
     final url = Uri.parse('https://gcloud.servatom.com/');
-    try{
+    try {
       final response = await http.get(url);
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         final responseData = json.decode(response.body) as List<dynamic>;
-      
-      responseData.forEach((element) { 
-        _users.add(
-          User(
-            element["name"], 
-            element["email"], 
-            element["qwikLabURL"], 
-            element["profile_image"],
-            element["total_score"], 
-            element["track1_score"], 
-            element["track2_score"],
-            i
-            ),
-            
-        );
-        i++;
-      });
-      notifyListeners();
-      }else{
+
+        responseData.forEach((element) {
+         
+          
+          _users.add(
+            User(
+                element["name"],
+                element["email"],
+                element["qwikLabURL"],
+                element["profile_image"],
+                element["total_score"],
+                element["track1_score"],
+                element["track2_score"],
+                i),
+          );
+          i++;
+        });
+        
+        notifyListeners();
+      } else {
         throw "Could Not Get data";
       }
-      
-    }catch(e){
+    } catch (e) {
       rethrow;
     }
   }
-  void search(String name){
-    _searchList = [];
-    if(name == ""){
 
-    }else{
+  void search(String name) {
+    _searchList = [];
+    if (name == "") {
+    } else {
       _users.forEach((element) {
-      if(element.name.toLowerCase().contains(name)){
-        _searchList.add(element);
-      }
-     });
+        if (element.name.toLowerCase().contains(name)) {
+          _searchList.add(element);
+        }
+      });
     }
-    
-     notifyListeners();
+
+    notifyListeners();
   }
-  String get emptyListen{
+
+  String get emptyListen {
     return 'ok';
   }
-  void emptySearchList(){
+
+  void emptySearchList() {
     _searchList = [];
   }
 }
