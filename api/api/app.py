@@ -137,6 +137,12 @@ def image():
 def sendScrappingErrorLog():
     return send_file('database/scraper_log.txt', 'text/plain')
 
+@app.route("/getScore")
+def giveScore():
+    url = request.json["url"]
+    #user = db.query(models.Leaderboard).filter_by(qwiklab_url=url).first()
+    return jsonify(getScore(url))
+
 if __name__== "__main__":
     app.run(
         host='0.0.0.0', port="443",
