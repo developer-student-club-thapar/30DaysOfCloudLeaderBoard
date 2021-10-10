@@ -2,7 +2,7 @@ from app import db
 import models
 from getData import getScoreRefresh
 import time
-
+import os
 def refreshDb():
     # get every row from the database
     data = db.query(models.Leaderboard).all()    
@@ -22,6 +22,10 @@ def refreshDb():
             db.commit()
             print("updated")
         else:
+            name = user.name 
+            print("no score")
+            # put this in a log file
+            os.system("echo '" + name + "' >> database/scraper_log.txt")
             print("error")
             pass
     
