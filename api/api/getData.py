@@ -106,13 +106,16 @@ def getScoreRefresh(qwikLabURL):
             track1_Score = 0
             track2_Score = 0
             
-            # track1_score
             for badge in badges:
-                if badge in track1:
-                    track1_Score += 1
+                year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+                if year == "2021":
+                    if badge in track1:
+                        track1_Score += 1
             for badge in badges:
-                if badge in track2:
-                    track2_Score += 1
+                year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+                if year == "2021":
+                    if badge in track2:
+                        track2_Score += 1
             return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
         except:
             time.sleep(20)
