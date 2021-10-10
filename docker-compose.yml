@@ -7,6 +7,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "5000:5000"
+      - "6363:6363"
     volumes:
       - ./database:/app/database
+    environment:
+      - SECRET_KEY=<SECRET_KEY_FOR_PASSWD>
+      - EMAIL_USER=<EMAIL ACC>
+      - EMAIL_PASS=<EMAIL_PASSWD>
