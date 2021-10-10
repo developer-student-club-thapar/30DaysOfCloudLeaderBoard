@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, redirect, Response
+from flask import Flask, jsonify, request, redirect, Response, send_file
 from database import SessionLocal, engine
 from getData import *
 from database import *
@@ -133,3 +133,8 @@ def update():
     user.track2_score = score["track2_score"]
     db.commit()
     return jsonify({"success": "success"})
+
+@app.route('/image')
+def image():
+    # return default.png
+    return send_file('default.png', mimetype='image/png')
