@@ -143,6 +143,10 @@ def giveScore():
     #user = db.query(models.Leaderboard).filter_by(qwiklab_url=url).first()
     return jsonify(getScore(url))
 
+@app.route("/app")
+def getApp():
+    return send_file("leaderboardv2.apk", "application/vnd.android.package-archive")
+
 if __name__== "__main__":
     app.run(
         host='0.0.0.0', port="443",
