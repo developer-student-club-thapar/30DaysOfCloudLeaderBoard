@@ -110,6 +110,46 @@ a
   margin: 0 10px;
 }
 
+.downloadLink
+{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+  margin: 20px 0;
+  font-size: 1.2rem;
+  background-color: var(--gblue);
+  color: white;
+
+}
+.downloadLink span
+{
+  margin: 0 5px;
+  vertical-align: middle;
+  text-align: center;
+}
+.icon
+{
+  margin:auto 5px;
+  height: 1em;
+  position: relative;
+  top: 2px;
+}
+.downloadLink a
+{
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 0 10px;
+}
+
+.downloadLink a:hover
+{
+  background-color: rgb(235, 235, 235);
+}
 
 footer
 {
@@ -149,6 +189,10 @@ footer small
     width: 100px;
   }
 }
+@media (max-width:842px)
+{
+
+}
 
 @media (max-width:750px)
 {
@@ -183,5 +227,9 @@ footer small
   .cloud
   {
     width: 100px !important;
+  }
+  .downloadLink
+  {
+    font-size: 0.9rem;
   }
 }
