@@ -31,7 +31,6 @@ def checkEmail():
         myfile.write(str(time.time()))
     email_user = os.environ.get('EMAIL_USER')
     email_password = os.environ.get('EMAIL_PASS')
-    email_password = 'hariom123A'
 
     mail = imaplib.IMAP4_SSL('imap.gmail.com', 993)
     mail.login(email_user, email_password)
