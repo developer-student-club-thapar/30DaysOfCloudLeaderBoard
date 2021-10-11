@@ -6,6 +6,8 @@ import pandas as pd
 import schedule
 import time
 
+last_read_email = ""
+
 def generateRandomString():
     return base64.b64encode(os.urandom(5)).decode('utf-8')
 
@@ -23,6 +25,7 @@ def convertToCSV(filePath):
         os.system("rm "+filePath)
 
 def checkEmail():
+    global last_read_email
     with open("database/loop.txt", "a+") as myfile:
         myfile.write("\n")
         myfile.write(str(time.time()))
@@ -50,6 +53,11 @@ def checkEmail():
         if part.get('Content-Disposition') is None:
             continue
 
+        # get date of email
+        date = email_message['Date']
+        if date == last_read_email:
+            return
+        last_read_email = date
         fileName = part.get_filename()
         if bool(fileName):
             filePath = os.path.join(r"./", fileName)
