@@ -145,7 +145,46 @@ def giveScore():
 
 @app.route("/app")
 def getApp():
+    # write in a text file the number
+    # of times the app is accessed
+    #check if file exists
+    if os.path.isfile("database/app.txt"):
+        # if file exists, open it and read the number
+        with open("database/app.txt", "r") as file:
+            number = file.read()
+        # increment the number
+        number = int(number) + 1
+        # write the number in the file
+        with open("database/app.txt", "w") as file:
+            file.write(str(number))
+    else:
+        # if file does not exist, create it and write the number
+        with open("database/app.txt", "w") as file:
+            file.write("1")
+
     return send_file("leaderboardv2.apk", "application/vnd.android.package-archive")
+
+@app.route("/app/number")
+def getAppNumber():
+    # check if file exists
+    if os.path.isfile("database/app.txt"):
+        # if file exists, open it and read the number
+        with open("database/app.txt", "r") as file:
+            number = file.read()
+        # return the number
+        return jsonify({"number": number})
+    else:
+        # if file does not exist, return 0
+        return jsonify({"number": 0})
+
+@app.route("/updateURL")
+def updateURL():
+    url = request.json["url"]
+    email = request.json["email"]
+    user = db.query(models.Leaderboard).filter_by(email=email).first()
+    user.qwiklab_url = url
+    db.commit()
+    return jsonify({"success": "success"})
 
 if __name__== "__main__":
     app.run(
