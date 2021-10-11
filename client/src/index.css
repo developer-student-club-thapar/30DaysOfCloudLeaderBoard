@@ -17,7 +17,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Product Sans', sans-serif;
   color: rgb(110, 110, 110);
-  max-width: 100vw;
+  max-width: 100vw !important;
   overflow-x: hidden;
                                                 
 }
@@ -178,6 +178,7 @@ footer small
 .footer img
 {
   margin: 0 20px;
+  width: 80px;
 }
 
 @media (max-width:1000px)
@@ -191,7 +192,10 @@ footer small
 }
 @media (max-width:842px)
 {
-
+  .footer img 
+  {
+    width: 70px;
+  }
 }
 
 @media (max-width:750px)
@@ -211,6 +215,10 @@ footer small
     bottom: 50px;
     right: -40px;
     width: 100px;
+  }
+  .footer img 
+  {
+    width: 60px;
   }
 }
 

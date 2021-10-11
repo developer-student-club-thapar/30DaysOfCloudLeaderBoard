@@ -3,10 +3,35 @@ import Leaderboard from "./components/Leaderboard";
 import Header from './components/Header';
 import Footer from './components/Footer';
 import {AiFillAndroid, AiOutlineDownload} from 'react-icons/ai';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Modal from './components/Modal';
+import { useEffect, useState } from 'react';
 
 function App() {
+  
+  const width = useMediaQuery('(max-width:540px)');
+  const [isModal, setIsModal] = useState(false);
+
+  const showPopUp=()=>
+  {
+    if(width)
+    setTimeout(()=>{setIsModal(true)}, 2000)
+    else
+    setIsModal(false)
+    
+  }
+  
+  useEffect(()=>{
+    showPopUp()
+  },[width])
+
   return (
     <>
+      {
+        isModal?
+        (<Modal onClose={setIsModal}/>)
+        :null
+      }
       <header>
         <Header/>
       </header>
