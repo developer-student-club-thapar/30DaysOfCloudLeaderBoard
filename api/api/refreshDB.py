@@ -2,8 +2,13 @@ from app import db
 import models
 from getData import getScoreRefresh
 import time
+import schedule
 import os
 def refreshDb():
+    # write refresh db to log.txt
+    print("Refreshing DB")
+    with open("database/scraping_log.txt", "a+") as f:
+        f.write("Refreshing DB at " + time.strftime("%H:%M:%S") + "\n")
     # get every row from the database
     data = db.query(models.Leaderboard).all()    
     # get the data from the database
@@ -28,7 +33,7 @@ def refreshDb():
             os.system("echo '" + name + "' >> database/scraper_log.txt")
             print("error")
             pass
-    
+schedule.every(1).seconds.do(refreshDb)
 while True:
-    refreshDb()
-    time.sleep(60)
+    schedule.run_pending()
+    time.sleep(1)
