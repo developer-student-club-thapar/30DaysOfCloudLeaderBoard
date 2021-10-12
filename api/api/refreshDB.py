@@ -8,12 +8,15 @@ def refreshDb():
     # write refresh db to log.txt
     print("Refreshing DB")
     with open("database/scraping_log.txt", "a+") as f:
-        f.write("Refreshing DB at " + time.strftime("%H:%M:%S") + "\n")
+        f.write("\n=============\nRefreshing DB at " + time.strftime("%H:%M:%S") + "\n")
     # get every row from the database
     data = db.query(models.Leaderboard).all()    
     # get the data from the database
     for user in data:
         print(user.name)
+        # put name in the scraping_log
+        with open("database/scraping_log.txt", "a+") as f:
+            f.write(user.name + " " + "updated\n")
         # get the score
         score = getScoreRefresh(user.qwiklab_url)
         # update the score
@@ -28,11 +31,12 @@ def refreshDb():
             print("updated")
         else:
             name = user.name 
-            print("no score")
+            with open("database/scraping_log.txt", "a+") as f:
+                f.write(user.name + " " + "error: Scrapping FAILED\n\n")
             # put this in a log file
-            os.system("echo '" + name + "' >> database/scraper_log.txt")
             print("error")
             pass
+
 schedule.every(1).seconds.do(refreshDb)
 while True:
     schedule.run_pending()
