@@ -3,7 +3,7 @@ const Loader=()=>
 {
     return(
         <div className="loader">
-            <div class="dot-flashing"></div>
+            <div className="dot-flashing"></div>
         </div>
     )
 }

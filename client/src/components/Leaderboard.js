@@ -111,9 +111,9 @@ const Leaderboard=()=>
               <tbody>
                 {
                   !isLoading?
-                  filteredList.map((member)=>{
+                  filteredList.map((member,index)=>{
                       return(
-                        <Row key={member.rank} data={member} maxScore={max_marks}/>
+                        <Row key={index} data={member} maxScore={max_marks}/>
                       );
                   }):null
                 }
