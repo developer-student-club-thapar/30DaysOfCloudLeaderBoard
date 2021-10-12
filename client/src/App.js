@@ -11,11 +11,17 @@ function App() {
   
   const width = useMediaQuery('(max-width:540px)');
   const [isModal, setIsModal] = useState(false);
+  const [yOffset, setYOffset] = useState(0);
 
   const showPopUp=()=>
   {
     if(width)
-    setTimeout(()=>{setIsModal(true)}, 2000)
+    setTimeout(()=>{
+      
+      const y=window.pageYOffset;
+      setYOffset(y);
+      setIsModal(true)
+    }, 2000)
     else
     setIsModal(false)
     
@@ -29,7 +35,7 @@ function App() {
     <>
       {
         isModal?
-        (<Modal onClose={setIsModal}/>)
+        (<Modal onClose={setIsModal} yOffset={yOffset}/>)
         :null
       }
       <header>

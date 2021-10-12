@@ -16,8 +16,11 @@ const Modal=(props)=>
     
     return(
         <>
-            <div className="backdrop" onClick={()=>{props.onClose(false)}}></div>
-            <div className="modal">
+            <div className="backdrop"
+            style={{top:props.yOffset}}
+            onClick={()=>{props.onClose(false)}}></div>
+
+            <div className="modal" style={{top:`calc(50% + ${props.yOffset}px)`}}>
                 <span>Download the Android app for this leaderboard:</span>
                 <a href="https://gcloud.servatom.com/app" target="_blank">
                     <AiOutlineDownload/><span>Download App</span>
