@@ -17,7 +17,7 @@ const Modal=(props)=>
     return(
         <>
             <div className="backdrop"
-            style={{top:props.yOffset}}
+            style={{top:`calc(${props.yOffset}px - 50%)`}}
             onClick={()=>{props.onClose(false)}}></div>
 
             <div className="modal" style={{top:`calc(50% + ${props.yOffset}px)`}}>
