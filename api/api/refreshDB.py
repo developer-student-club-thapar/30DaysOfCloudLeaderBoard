@@ -1,11 +1,12 @@
 from app import db
 import models
-from getData import getScoreRefresh
+from getData import completionDate, getScoreRefresh
 import time
 import schedule
 import os
 def refreshDb():
     # write refresh db to log.txt
+    finisherData()
     print("Refreshing DB")
     with open("database/scraping_log.txt", "a+") as f:
         f.write("\n=============\nRefreshing DB at " + time.strftime("%H:%M:%S") + "\n")
@@ -36,6 +37,19 @@ def refreshDb():
             # put this in a log file
             print("error")
             pass
+    # get completition date of the people with total score 12
+    # get the data from the database
+    # get users with total score 12
+    refreshDb()
+def finisherData():
+    data = db.query(models.Leaderboard).filter(models.Leaderboard.total_score == 12).all()
+    for contestant in data:
+        # get the date of completion
+        date = completionDate(contestant.qwiklab_url)
+        contestant.date = date
+        # commit the changes
+        db.commit()
+        print(contestant.name + " updated")
 
 schedule.every(1).seconds.do(refreshDb)
 while True:
