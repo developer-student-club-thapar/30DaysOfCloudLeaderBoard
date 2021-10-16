@@ -84,8 +84,7 @@ def upload():
                 thread.start()
                 return jsonify({"success": "success"})
             except:
-                return Response(jsonify({"error": "Invalid csv file"}), status=400)
-
+                return jsonify({"error": "Invalid csv file"})
 @app.route('/register', methods=['POST'])
 def register():
     # get data from the name email and qwiklabs from the request
@@ -97,9 +96,9 @@ def register():
     try:
         db.add(user)
         db.commit()
-        return Response(jsonify({"success": "success"}), status=200)
+        return jsonify({"success": "success"})
     except:
-        return Response(jsonify({"error": "Already exists"}), status=400)
+        return jsonify({"error": "Already exists"})
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -107,14 +106,14 @@ def login():
     password = request.json['password']
     user = db.query(models.UserModel).filter_by(username=username).first()
     if not user:
-        return Response(jsonify({"message": "user does not exist"}), status=404)
+        return jsonify({"message": "user does not exist"})
 
     if not verify_passwd(password, user.password):
         # return status code 401 and send message
-        return Response(jsonify({"message": "Invalid credentials"}), status=401)
+        return jsonify({"message": "Invalid credentials"})
 
     access_token = create_access_token(user.username)
-    return Response(jsonify({"access_token": access_token, "type": "bearer"}), status=200)
+    return jsonify({"access_token": access_token, "type": "bearer"})
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -142,7 +141,7 @@ def sendScrappingErrorLog():
 
     # pass token to verify
     if verify_token(header) == None:
-        return Response(jsonify({"error": "Invalid Token"}), status=401)
+        return jsonify({"error": "Invalid Token"})
     
     return send_file('database/scraping_log.txt', 'text/plain')
 
@@ -150,7 +149,7 @@ def sendScrappingErrorLog():
 def giveScore():
     url = request.json["url"]
     #user = db.query(models.Leaderboard).filter_by(qwiklab_url=url).first()
-    return Response(jsonify(getScore(url)), status=200)
+    return jsonify(getScore(url))
 
 @app.route("/app")
 def getApp():
@@ -181,10 +180,10 @@ def getAppNumber():
         with open("database/app.txt", "r") as file:
             number = file.read()
         # return the number
-        return Response(jsonify({"number": number}), status=200)
+        return jsonify({"number": number})
     else:
         # if file does not exist, return 0
-        return Response(jsonify({"number": 0}), status=200)
+        return jsonify({"number": 0})
 
 @app.route("/updateURL")
 def updateURL():
@@ -193,7 +192,7 @@ def updateURL():
     user = db.query(models.Leaderboard).filter_by(email=email).first()
     user.qwiklab_url = url
     db.commit()
-    return Response(jsonify({"success": "success"}), status=200)
+    return jsonify({"success": "success"})
 
 if __name__== "__main__":
     app.run(
