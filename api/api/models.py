@@ -12,6 +12,7 @@ class Leaderboard(Base):
     track1_score = Column(Integer)
     track2_score = Column(Integer)
     profile_image = Column(String(120), unique=False)
+    date = Column(String(120), nullable=True)
     def __init__(self, name, email, total_score, track1_score, track2_score, qwiklab_url, profile_image):
         self.name = name
         self.email = email

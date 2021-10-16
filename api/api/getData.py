@@ -34,20 +34,18 @@ def getScore(qwikLabURL):
         badges_bs4 = soup.find_all('span', class_='ql-subhead-1 l-mts')
         badges = []
         for badge_bs4 in badges_bs4:
-            badges.append(badge_bs4.text.strip())
+            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+            if year == "2021":
+                badges.append(badge_bs4.text.strip())
+            else:
+                continue
         track1_Score = 0
         track2_Score = 0
         # track1_score
         for badge in badges:
-            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-            if year == "2021":
-                if badge in track1:
-                    track1_Score += 1
+            track1_Score += 1
         for badge in badges:
-            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-            if year == "2021":
-                if badge in track2:
-                    track2_Score += 1
+            track2_Score += 1
         return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
     except:
         time.sleep(20)
@@ -102,23 +100,42 @@ def getScoreRefresh(qwikLabURL):
             badges_bs4 = soup.find_all('span', class_='ql-subhead-1 l-mts')
             badges = []
             for badge_bs4 in badges_bs4:
-                badges.append(badge_bs4.text.strip())
+                year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
+                if year == "2021":
+                    badges.append(badge_bs4.text.strip())
             track1_Score = 0
             track2_Score = 0
             
             for badge in badges:
-                year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-                if year == "2021":
-                    if badge in track1:
-                        track1_Score += 1
+                if badge in track1:
+                    track1_Score += 1
             for badge in badges:
-                year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-                if year == "2021":
-                    if badge in track2:
-                        track2_Score += 1
+                if badge in track2:
+                    track2_Score += 1
             return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
         except:
             time.sleep(20)
             tries += 1
             continue
     return None
+
+def completionDate(url):
+    # get the users data
+    url = url
+    # open url and find class ql-subhead1 l-mts 
+    try:
+        html = urlopen(url)
+        soup = BeautifulSoup(html, "html.parser")
+        # get the class
+        badges = soup.find_all('span', class_='ql-subhead-1 l-mts')
+        completion_date = ""
+        for badge in badges:
+            date = badge.find_next_sibling("span").text.split()
+            day = date[2].split(",")[0].strip()
+            month = date[1].strip()
+            year = date[3].strip()
+            completion_date = day + "-" + month + "-" + year
+            return completion_date
+    except:
+        time.sleep(20)
+        return completionDate(url)
