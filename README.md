@@ -27,7 +27,7 @@
 Here is the website :  https://30daysofgcp.dsctiet.tech/
 
 
-The project consists of a single page site and an app having a leaderboard table with search functionality to easily find a particular participant by name, and a couple of graphs showing the general point trends. The graphs have been made using `react-chartjs-2` npm package in the web version and `syncfusion_flutter_charts` in the app. The leaderboard encourages the participants to proceed with their challenge by giving the top scorer(s) a corwn <img src="https://assets.servatom.com/DSC/gcp/crown.jpeg" height="16px"> against their ranks. This has been done to promote healthy competition among the participants and appreciate the enthusiasm of those who finished the challenge before time! 
+The project consists of a single page site and an app having a leaderboard table with search functionality to easily find a particular participant by name, and a couple of graphs showing the general point trends. The graphs have been made using `react-chartjs-2` npm package in the web version and `syncfusion_flutter_charts` in the app. The leaderboard encourages the participants to proceed with their challenge by giving the top scorer(s) a crown <img src="https://assets.servatom.com/DSC/gcp/crown.jpeg" height="16px"> against their ranks. This has been done to promote healthy competition among the participants and appreciate the enthusiasm of those who finished the challenge before time! 
 
 <hr>
 
@@ -39,36 +39,16 @@ The project consists of a single page site and an app having a leaderboard table
 - Make sure that before you create a new branch for new changes,[syncing with upstream](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) is neccesary.
 
 
-<!-- ### Setup and running of project (Backend) 🧮
+### Setup and running of project (Backend) 🧮
 - Fork the repo and clone it.
-- Go in the repo and setup virtualenvironment using <br>
-```python -m virtualenv venv``` 
-- Then activate the environment using <br>
-    On Windows
-```source venv/Scripts/activate```
-    On MacOS/Linux
-```source venv/bin/actiavte```
+- Go in the repo and go into the ```api``` folder <br>
+- Edit the docker-compose.yml file
+    - For the ```SECRET_KEY``` run ```openssl rand -hex 32``` in your terminal and put the output in the variable
+    - For ```EMAIL_USER``` and ```EMAIL_PASS``` put in the credentials of your gmail email id.
+    - Forward the relevant port for the API server
+- For https server put the  ```origin.pem``` and ```key.pem``` certificates in the api folder
+- To run the server run: ```docker-compose up --build```
 
-- Change into the `./hashx` directory.
-   > All the following steps are to be executed in the hashx directory.
-- Install requirements\
-```pip install -r requirements.txt```
-- Rename ```.env.debug``` to ```.env```
-- set secret key for your django project.
-- You can use [https://djecrety.ir/] to generate your secret key
-
-
-- After the above setup, run \
-```python manage.py makemigrations```\
-```python manage.py migrate```
-
-- Start the backend server\
-    ```python manage.py runserver```\
-    Runs the backend server at default port ```8000```.\
-    Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
-
-The page will reload if you make edits.<br />
- -->
  
 ### Setup and running of project (Frontend) 🔮
 
@@ -83,7 +63,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Setup and running of project (App) 📱
 
 - Make sure you have Flutter installed on your machine
-- Move into the `gcloud_leaderboard` by doing `cd gcloud_leaderboard` in the root directory of this repository
+- Move into the `gcloud_leaderboard` by doing `cd app/gcloud_leaderboard` in the root directory of this repository
 - After getting into the gcloud_leaderboard directory, run `flutter pub get` to install all the dependencies
 - Run the app on an emulator
 
@@ -93,6 +73,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 <!-- * [Django 3.0](https://www.djangoproject.com) - The web framework used in the project.
 * [Django Graphene ( Django Graphene )](https://docs.graphene-python.org/projects/django/en/latest/) - Used to generate GraphQL API -->
 * [Flask](https://flask.palletsprojects.com/en/2.0.x/) - Does the magic of making REST API endpoints 
+* [SQLAlchemy](https://www.sqlalchemy.org/) - Storing the scores and user data in a database
+* [Docker](https://www.docker.com/) - Running the server in a containerised way
 
 ### Web Application 🖥
 * [React](https://reactjs.org) - Do you Even Need an introduction to this ? 😂
