@@ -39,7 +39,7 @@ The project consists of a single page site and an app having a leaderboard table
 - Make sure that before you create a new branch for new changes,[syncing with upstream](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork) is neccesary.
 
 
-### Setup and running of project (Backend) 🧮
+## Setup and running of project (Backend) 🧮
 - Fork the repo and clone it.
 - Go in the repo and go into the ```api``` folder <br>
 - Edit the docker-compose.yml file
@@ -48,6 +48,10 @@ The project consists of a single page site and an app having a leaderboard table
     - Forward the relevant port for the API server
 - For https server put the  ```origin.pem``` and ```key.pem``` certificates in the api folder
 - To run the server run: ```docker-compose up --build```
+- Server will now run at: ```https://<hostname>:<port_exposed>```
+- To run via http:
+    - Comment the ssl_context line in the ```api/api/app.py```
+    - In ```api/api/run.sh``` comment line 3 and uncomment line 4 and make the necessary changes to the port
 
  
 ### Setup and running of project (Frontend) 🔮
