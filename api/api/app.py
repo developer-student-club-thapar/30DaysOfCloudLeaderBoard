@@ -137,7 +137,7 @@ def sendScrappingErrorLog():
     # get header
     header = request.headers.get('Authorization')
     if header is None:
-        return Response(jsonify({"error": "No authorization header"}), status=400)
+        return jsonify({"error": "No authorization header"})
 
     # pass token to verify
     if verify_token(header) == None:
@@ -187,6 +187,15 @@ def getAppNumber():
 
 @app.route("/updateURL")
 def updateURL():
+    # Security
+    header = request.headers.get('Authorization')
+    if header is None:
+        return jsonify({"error": "No authorization header"})
+
+    # pass token to verify
+    if verify_token(header) == None:
+        return jsonify({"error": "Invalid Token"})
+        
     url = request.json["url"]
     email = request.json["email"]
     user = db.query(models.Leaderboard).filter_by(email=email).first()

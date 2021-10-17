@@ -5,7 +5,10 @@ import os
 import pandas as pd
 import schedule
 import time
-
+import os
+sender_email = os.environ.get('SENDER_EMAIL')
+if sender_email == None:
+    sender_email = "email@email.com"
 last_read_email = ""
 
 def generateRandomString():
@@ -36,7 +39,7 @@ def checkEmail():
     mail.login(email_user, email_password)
     mail.select('inbox')
 
-    type, data = mail.search(None, 'FROM rsharma5_be20@thapar.edu')
+    type, data = mail.search(None, 'FROM ' + sender_email)
     mail_ids = data[0]
     id_list = mail_ids.split()
     

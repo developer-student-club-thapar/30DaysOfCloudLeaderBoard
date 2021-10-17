@@ -43,9 +43,11 @@ def getScore(qwikLabURL):
         track2_Score = 0
         # track1_score
         for badge in badges:
-            track1_Score += 1
+            if badge in track1:
+                track1_Score += 1
         for badge in badges:
-            track2_Score += 1
+            if badge in track2:
+                track2_Score += 1
         return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
     except:
         time.sleep(20)
@@ -138,7 +140,7 @@ def completionDate(url):
                 year = date[3].strip()
                 completion_date = day + "-" + month + "-" + year
                 return completion_date
-            elif badge in track2:
+            elif badge.text.strip() in track2:
                 date = badge.find_next_sibling("span").text.split()
                 day = date[2].split(",")[0].strip()
                 month = date[1].strip()
