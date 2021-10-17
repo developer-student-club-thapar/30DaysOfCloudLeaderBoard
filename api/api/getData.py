@@ -130,12 +130,23 @@ def completionDate(url):
         badges = soup.find_all('span', class_='ql-subhead-1 l-mts')
         completion_date = ""
         for badge in badges:
-            date = badge.find_next_sibling("span").text.split()
-            day = date[2].split(",")[0].strip()
-            month = date[1].strip()
-            year = date[3].strip()
-            completion_date = day + "-" + month + "-" + year
-            return completion_date
+            print(badge.text.strip())
+            if badge.text.strip() in track1:
+                date = badge.find_next_sibling("span").text.split()
+                day = date[2].split(",")[0].strip()
+                month = date[1].strip()
+                year = date[3].strip()
+                completion_date = day + "-" + month + "-" + year
+                return completion_date
+            elif badge in track2:
+                date = badge.find_next_sibling("span").text.split()
+                day = date[2].split(",")[0].strip()
+                month = date[1].strip()
+                year = date[3].strip()
+                completion_date = day + "-" + month + "-" + year
+                return completion_date
+            else:
+                continue
     except:
         time.sleep(20)
         return completionDate(url)
