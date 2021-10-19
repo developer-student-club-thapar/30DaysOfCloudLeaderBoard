@@ -185,6 +185,32 @@ def getAppNumber():
         # if file does not exist, return 0
         return jsonify({"number": 0})
 
+@app.route("/app/activate")
+def activateApp():
+    if os.path.isfile("database/app_active.txt"):
+        # if file exists, open it and read the number
+        with open("database/app_active.txt", "r") as file:
+            number = file.read()
+        # increment the number
+        number = int(number) + 1
+        # write the number in the file
+        with open("database/app_active.txt", "w") as file:
+            file.write(str(number))
+    else:
+        # if file does not exist, create it and write the number
+        with open("database/app_active.txt", "w") as file:
+            file.write("1")
+    return jsonify({"message": "activated"})
+
+@app.route("/app/active")
+def getActiveApp():
+    if os.path.isfile("database/app_active.txt"):
+        with open("database/app_active.txt", "r") as file:
+            number = file.read()
+        return jsonify({"number": number.strip()})
+    else:
+        return jsonify({"number": 0})
+
 @app.route("/updateURL")
 def updateURL():
     # Security
