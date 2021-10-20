@@ -232,5 +232,5 @@ def updateURL():
 if __name__== "__main__":
     app.run(
         host='0.0.0.0', port="443",
-        ssl_context=('origin.pem', 'origin.pem'), # comment this line to not run the server in https
+        ssl_context=('origin.pem', 'key.pem'), # comment this line to not run the server in https
     )
