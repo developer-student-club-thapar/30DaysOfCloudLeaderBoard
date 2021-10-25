@@ -27,7 +27,7 @@
 Here is the website :  https://30daysofgcp.dsctiet.tech/
 
 
-The project consists of a single page site and an app having a leaderboard table with search functionality to easily find a particular participant by name, and a couple of graphs showing the general point trends. The graphs have been made using `react-chartjs-2` npm package in the web version and `syncfusion_flutter_charts` in the app. The leaderboard encourages the participants to proceed with their challenge by giving the top scorer(s) a crown <img src="https://assets.servatom.com/DSC/gcp/crown.jpeg" height="16px"> against their ranks. This has been done to promote healthy competition among the participants and appreciate the enthusiasm of those who finished the challenge before time! 
+The project consists of a single page site and an app having a leaderboard table with search functionality to easily find a particular participant by name, and a couple of graphs showing the general point trends. The graphs have been made using `react-chartjs-2` npm package in the web version and `syncfusion_flutter_charts` in the app. The website is powered by a flask based api. The backend system periodically scrapes the score from the qwkilab url public profile webpage and returns the ordered leaderboard accordingly. The leaderboard encourages the participants to proceed with their challenge by giving the top scorer(s) a crown <img src="https://assets.servatom.com/DSC/gcp/crown.jpeg" height="16px"> against their ranks. This has been done to promote healthy competition among the participants and appreciate the enthusiasm of those who finished the challenge before time! 
 
 <hr>
 
