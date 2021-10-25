@@ -2,6 +2,7 @@ from database import *
 import models
 from database import SessionLocal, engine
 from app import db
+from getData import leaderboard
 import time
 from datetime import datetime
 def getJsonFromDB():
