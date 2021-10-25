@@ -23,36 +23,6 @@ def addUser(name, email, qwikLabURL):
     json["total_score"] = score['total_score']
     return json
 
-def getScore(qwikLabURL):
-    # get the users data
-    url = qwikLabURL
-    # open url and find class ql-subhead1 l-mts 
-    try:
-        html = urlopen(url)
-        soup = BeautifulSoup(html, "html.parser")
-        # get the class
-        badges_bs4 = soup.find_all('span', class_='ql-subhead-1 l-mts')
-        badges = []
-        for badge_bs4 in badges_bs4:
-            year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-            if year == "2021":
-                badges.append(badge_bs4.text.strip())
-            else:
-                continue
-        track1_Score = 0
-        track2_Score = 0
-        # track1_score
-        for badge in badges:
-            if badge in track1:
-                track1_Score += 1
-        for badge in badges:
-            if badge in track2:
-                track2_Score += 1
-        return {'track1_score': track1_Score, 'track2_score': track2_Score, "total_score": track1_Score + track2_Score}
-    except:
-        time.sleep(20)
-        return getScore(qwikLabURL)
-
 def leaderboard(data):
     # put the user dictionaries in descending order with the total score
     data.sort(key=lambda x: x['total_score'], reverse=True)
@@ -89,6 +59,7 @@ def getAvatar(qwikLabURL):
         return "https://gcloud.servatom.com/image"
 
 def getScoreRefresh(qwikLabURL):
+    """Returns the score of the uer by scraping data from the qwiklabURL"""
     # get the users data
     url = qwikLabURL
     # open url and find class ql-subhead1 l-mts 

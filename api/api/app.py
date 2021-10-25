@@ -44,7 +44,7 @@ def add():
     email = request.json['email']
     qwiklabs = request.json['qwikLabURL']
     profile_image = profileImage(qwiklabs)
-    score = getScore(qwiklabs)
+    score = getScoreRefresh(qwiklabs)
     user = models.Leaderboard(name=name, email=email, qwiklab_url=qwiklabs, total_score=score["total_score"], track1_score=score["track1_score"], track2_score=score["track2_score"], profile_image=profile_image)
     try:
         db.add(user)
@@ -120,7 +120,7 @@ def update():
     email = request.json['email']
     # find email in database
     user = db.query(models.Leaderboard).filter_by(email=email).first()
-    score = getScore(user.qwiklab_url)
+    score = getScoreRefresh(user.qwiklab_url)
     user.total_score = score["total_score"]
     user.track1_score = score["track1_score"]
     user.track2_score = score["track2_score"]
@@ -149,7 +149,7 @@ def sendScrappingErrorLog():
 def giveScore():
     url = request.json["url"]
     #user = db.query(models.Leaderboard).filter_by(qwiklab_url=url).first()
-    return jsonify(getScore(url))
+    return jsonify(getScoreRefresh(url))
 
 @app.route("/app")
 def getApp():
