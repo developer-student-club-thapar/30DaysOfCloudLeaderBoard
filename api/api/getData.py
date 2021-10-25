@@ -138,15 +138,21 @@ def completionDate(url):
                 day = date[2].split(",")[0].strip()
                 month = date[1].strip()
                 year = date[3].strip()
-                completion_date = day + "-" + month + "-" + year
-                return completion_date
+                if year == "2021":
+                    completion_date = day + "-" + month + "-" + year
+                    return completion_date
+                else:
+                    continue
             elif badge.text.strip() in track2:
                 date = badge.find_next_sibling("span").text.split()
                 day = date[2].split(",")[0].strip()
                 month = date[1].strip()
                 year = date[3].strip()
-                completion_date = day + "-" + month + "-" + year
-                return completion_date
+                if year == "2021":
+                    completion_date = day + "-" + month + "-" + year
+                    return completion_date
+                else:
+                    continue
             else:
                 continue
     except:
