@@ -51,7 +51,11 @@ def finisherData():
         db.commit()
         print(contestant.name + " updated")
 
-schedule.every(1).seconds.do(refreshDb)
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+isScraper = os.environ.get('SCRAPER_SWITCH')
+if isScraper == "true":
+    schedule.every(1).minutes.do(refreshDb)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+else:
+    print("Scraper is off")

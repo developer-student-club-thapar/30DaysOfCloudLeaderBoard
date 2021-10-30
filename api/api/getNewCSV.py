@@ -75,13 +75,17 @@ def checkEmail():
                 print("File already exists")
 
 # before this loop first check email and then run web scraper in background
-checkEmail()
-os.system("python refreshDB.py &") # web scraper turned on
-time.sleep(60*60)
-while True:
+isScraper = os.environ.get('SCRAPER_SWITCH')
+if isScraper == "true":
     checkEmail()
-    # append loop in txt file
-    with open("database/loop.txt", "a+") as myfile:
-        myfile.write("\n")
-        myfile.write(str(time.time()))
+    os.system("python refreshDB.py &") # web scraper turned on
     time.sleep(60*60)
+    while True:
+        checkEmail()
+        # append loop in txt file
+        with open("database/loop.txt", "a+") as myfile:
+            myfile.write("\n")
+            myfile.write(str(time.time()))
+        time.sleep(60*60)
+else:
+    print("Competition has ended")
