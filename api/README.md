@@ -20,3 +20,6 @@ After sending the email to the bot or uploading the CSV file or adding users exp
 
 
 The database of the entire leaderboard will be stored in ```leaderboard.sqlite``` in ```api/api/database/```
+
+### When competition ends:
+Go to the ```docker-compose.yml``` file and change the ```SCRAPER_SWITCH``` from ```true``` to ```false```. Restart the container with the new compose file and the scraping processes will stop and it will just return the leaderboard for the frontend.
