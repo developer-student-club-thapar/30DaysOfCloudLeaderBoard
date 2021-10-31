@@ -79,6 +79,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 * [Flask](https://flask.palletsprojects.com/en/2.0.x/) - Does the magic of making REST API endpoints 
 * [SQLAlchemy](https://www.sqlalchemy.org/) - Storing the scores and user data in a database
 * [Docker](https://www.docker.com/) - Running the server in a containerised way
+* [BeatifulSoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) - Library used to scrape data from public profiles
 
 ### Web Application 🖥
 * [React](https://reactjs.org) - Do you Even Need an introduction to this ? 😂
