@@ -5,6 +5,8 @@ API based on flask for showing the leaderboard of participants in 30 days of goo
 ## Documentation of API
 https://documenter.getpostman.com/view/16462223/UUy7aPBK
 
+### Setting the year of the competition
+Got to the ```docker-compose.yml``` file and change the ```YEAR``` variable to the appropriate year. For example if the competition is in 2021 the line should look like: ```- YEAR=2021```
 ### Uploading CSV file of data
 If you upload the CSV file data of the contestants once from then on out the system will automatically periodically keep scraping for updated scores of the contestants.<br>
 
