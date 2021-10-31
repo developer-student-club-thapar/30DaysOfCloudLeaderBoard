@@ -16,3 +16,4 @@ services:
       - EMAIL_PASS=<EMAIL_PASSWD>
       - SENDER_EMAIL=<SENDER_EAMIL>
       - SCRAPER_SWITCH=true
+      - YEAR=<competition year>
