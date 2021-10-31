@@ -4,8 +4,10 @@ import time
 from models import Leaderboard
 from database import SessionLocal, engine
 import models
-#from database import db
+import os
 
+#from database import db
+compYear = os.environ.get('YEAR')
 db = SessionLocal()
 
 track1 = ["Create and Manage Cloud Resources", "Perform Foundational Infrastructure Tasks in Google Cloud", "Set Up and Configure a Cloud Environment in Google Cloud", "Deploy and Manage Cloud Environments with Google Cloud", "Build and Secure Networks in Google Cloud", "Deploy to Kubernetes in Google Cloud"]
@@ -74,7 +76,7 @@ def getScoreRefresh(qwikLabURL):
             badges = []
             for badge_bs4 in badges_bs4:
                 year = badge_bs4.find_next_sibling("span").text.split(" ")[-1].strip()
-                if year == "2021":
+                if year == compYear:
                     badges.append(badge_bs4.text.strip())
             track1_Score = 0
             track2_Score = 0
@@ -109,7 +111,7 @@ def completionDate(url):
                 day = date[2].split(",")[0].strip()
                 month = date[1].strip()
                 year = date[3].strip()
-                if year == "2021":
+                if year == compYear:
                     completion_date = day + "-" + month + "-" + year
                     return completion_date
                 else:
@@ -119,7 +121,7 @@ def completionDate(url):
                 day = date[2].split(",")[0].strip()
                 month = date[1].strip()
                 year = date[3].strip()
-                if year == "2021":
+                if year == compYear:
                     completion_date = day + "-" + month + "-" + year
                     return completion_date
                 else:
