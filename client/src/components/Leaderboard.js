@@ -6,6 +6,8 @@ import LineChart from './LineChart';
 import BarChart from './BarChart';
 import Searchbar from './SearchBar';
 import Loader from './Loader';
+import localResult from '../finalLeaderboard.json';
+import localPfp from '../assets/avatars/leopard.png';
 
 const Leaderboard=()=>
 {
@@ -23,19 +25,40 @@ const Leaderboard=()=>
     const [frequencyTrack2, setFrequencyTrack2] = useState([]);
 
     const [isLoading, setIsLoading] = useState(true);
-    async function getLeaderboard()
+   function getLeaderboard()
     {
         
-        const response = await axios.get('https://gcloud.servatom.com/');
-        
-        setIsLoading(false)
+      try
+      {
+        const response = axios.get('https://gcloud.servatom.com/');
+          
+          setIsLoading(false)
+          let rank=1;
+          let result = response.data.map((person)=>{
+            return { ...person, rank:rank++}
+          })
+          setMembers(result);
+          setFilteredList(result)
+          fillDatasets(response.data);
+      }  
+      catch
+      {
+        // console.log("Api Down");
+        setIsLoading(false);
         let rank=1;
-        let result = response.data.map((person)=>{
+        let result = localResult.map((person)=>{
+
+          if(person.profile_image==="https://gcloud.servatom.com/image")
+          {
+            person.profile_image=localPfp;
+          }
           return { ...person, rank:rank++}
         })
         setMembers(result);
         setFilteredList(result)
-        fillDatasets(response.data);
+        fillDatasets(localResult);
+
+      }
     }
 
     const fillDatasets=(data)=>
