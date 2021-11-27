@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/developer-student-club-thapar/30DaysOfCloudLeaderBoard">
-    <img src="https://assets.servatom.com/DSC/gcp/cloud-icon.png" alt="cloud" width="80" height="80">
+    <img src="https://assets.servatom.com/DSC/cloud-icon.png" alt="cloud" width="80" height="80">
   </a>
   <h1 align="center">30 Days of Cloud Leaderboard</h1>
 </p>
